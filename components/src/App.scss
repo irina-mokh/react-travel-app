@@ -1,0 +1,66 @@
+@use './vars.scss';
+
+.App {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 11vh auto 7vh;
+  margin: 0 auto;
+  text-align: center;
+  
+  &__link {
+    color: vars.$red;
+    text-decoration: none;
+    margin: 0 0 0 1em;
+  }
+}
+
+.Header {
+  background-color: vars.$jet;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: white;
+  &__logo {
+    max-height: 90%;
+  }
+  &__nav {
+    display: flex;
+  }
+}
+
+.footer {
+  background-color: vars.$jet;
+  color: white;
+  padding: 1em;
+  text-align: center;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.github {
+  display: flex;
+  text-decoration: none;
+  transition: all 0.3s;
+  align-items: center;
+  &__icon {
+    display: inline-block;
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: transparent url('./assets/icons/gh.svg') center no-repeat;
+    background-size: contain;
+    filter: vars.$filter-jet;
+  }
+
+  &__text {
+    margin: 0 0 0 10px;
+    font-family: inherit;
+    font-size: 1.2em;
+    color: vars.$jet;
+  }
+}
