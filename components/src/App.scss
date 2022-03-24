@@ -40,6 +40,30 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .search{
+    font-size: 1.5em;
+    background-color: vars.$jet;
+    padding: 7px 10px 7px 20px;
+    color: vars.$snow;
+    border: 2px solid transparent;
+    border-radius: 1em;
+    opacity: 0.8;
+    outline-color: vars.$red;
+    &:focus {
+      opacity: 1;
+    }
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      height: 1em;
+      width: 1em;  
+      background-image: url('./assets/icons/close.svg');
+      filter: vars.$filter-snow;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+  }
 }
 
 .github {
