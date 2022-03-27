@@ -7,7 +7,7 @@ class Layout extends React.Component {
     return (
       <>
         <Header></Header>
-        <main>
+        <main className="main">
           <Outlet />
         </main>
         <footer className="footer">2022</footer>

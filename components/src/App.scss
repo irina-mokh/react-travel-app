@@ -8,7 +8,7 @@
   text-align: center;
   
   &__link {
-    color: vars.$red;
+    color: vars.$green;
     text-decoration: none;
     margin: 0 0 0 1em;
   }
@@ -38,18 +38,20 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 
   .search{
-    font-size: 1.5em;
+    font-size: 1.3em;
     background-color: vars.$jet;
     padding: 7px 10px 7px 20px;
     color: vars.$snow;
     border: 2px solid transparent;
     border-radius: 1em;
     opacity: 0.8;
-    outline-color: vars.$red;
+    outline-color: vars.$green;
+    &:hover {
+      opacity: 1;
+    }
     &:focus {
       opacity: 1;
     }
@@ -86,5 +88,84 @@
     font-family: inherit;
     font-size: 1.2em;
     color: vars.$jet;
+  }
+}
+
+.cards {
+  padding: 0;
+  max-width: 80%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1em;
+  .card{
+    list-style: none;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    grid-template-areas: 
+      "title flag"
+      "capital flag"
+      "currency area"
+      "cur_symbol population ";
+    background-color: #ececec;
+    border: 2px solid vars.$green;
+    border-radius: 0.8em;
+    padding: 7px;
+    &>* {
+      margin: 2px;
+    }
+    &:hover {
+      box-shadow: 5px 5px 10px #cacaca;
+    }
+    &__title {
+      grid-area: title;
+      color: vars.$green;
+      margin: 7px 0;
+
+    }
+    &__capital {
+      grid-area: capital;
+      font-size: 1.1em;
+      margin: 5px 0;
+    }
+    &__area {
+      grid-area: area;
+      font-style: italic;
+    }
+    &__population {
+      grid-area: population;
+      font-style: italic;
+
+    }
+    &__flag {
+      position: relative;
+      grid-area: flag;
+      &::after{
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        box-shadow: inset 0px 0px 7px 5px #ececec;
+        width: 100%;
+        height: 100%;
+      }
+      & img {
+        display: block;
+        z-index: -1;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    &__currency{
+      grid-area: currency;
+      font-size: 0.8em;
+      color: vars.$jet;
+    }
+    &__symbol {
+      grid-area: cur_symbol;
+      font-weight: 800;
+      font-size: 1.3em;
+      color: vars.$green;
+    }
   }
 }
