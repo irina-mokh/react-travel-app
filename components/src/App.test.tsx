@@ -1,13 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import AppRouter from './components/AppRouter';
 import { MemoryRouter } from 'react-router-dom';
 
 test('renders welcome', () => {
   // render(
   //   <MemoryRouter>
-  //     <App />
+  //     <AppRouter />
   //   </MemoryRouter>
   // );
   // const elem = screen.getByText(/home/i);

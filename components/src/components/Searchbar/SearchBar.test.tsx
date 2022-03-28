@@ -1,18 +1,21 @@
 import { render, screen } from '@testing-library/react';
-import SearchBar from './SearchBar';
+import userEvent from '@testing-library/user-event';
 import AppRouter from '../AppRouter';
-import { fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Search bar', () => {
   render(
     <MemoryRouter>
       <AppRouter />
-      <SearchBar value="some value" />
     </MemoryRouter>
   );
+  const elem = screen.getByLabelText('search');
   it('renders', () => {
-    const elem = screen.getByLabelText('search');
     expect(elem).toBeInTheDocument();
+  });
+
+  it('updates', () => {
+    // userEvent.type(elem, 'Hello, World!');
+    // expect(elem).toHaveValue('Hello, World!');
   });
 });

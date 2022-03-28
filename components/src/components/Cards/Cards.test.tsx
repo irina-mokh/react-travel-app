@@ -2,14 +2,14 @@ import { render, screen } from '@testing-library/react';
 import AppRouter from '../AppRouter';
 import { MemoryRouter } from 'react-router-dom';
 
-describe('Card', () => {
+describe('Cards', () => {
   render(
     <MemoryRouter>
       <AppRouter />
     </MemoryRouter>
   );
-  it('check for Japan card', () => {
-    const elem = screen.getByText('Japan');
-    expect(elem).toBeInTheDocument();
+  it('amount', () => {
+    const elems = screen.getAllByTestId('custom-card');
+    expect(elems).toHaveLength(6);
   });
 });
