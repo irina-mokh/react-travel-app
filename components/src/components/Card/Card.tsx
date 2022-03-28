@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardInfo, CardProps } from '../types';
+import { CardInfo, CardProps } from '../../types';
 
 class Card extends React.Component<CardProps, CardInfo> {
   constructor(props: CardProps) {
@@ -9,7 +9,7 @@ class Card extends React.Component<CardProps, CardInfo> {
   render() {
     return (
       <>
-        <li className="card">
+        <li className="card" data-testid="custom-card">
           <h3 className="card__title">{this.state.title}</h3>
           <p className="card__capital">{this.state.capital}</p>
           <p className="card__area">{this.state.area.toLocaleString() + ' m2'}</p>

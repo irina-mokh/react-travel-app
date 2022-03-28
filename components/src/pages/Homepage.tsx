@@ -1,6 +1,6 @@
 import React from 'react';
-import SearchBar from '../components/SearchBar';
-import Cards from '../components/Cards';
+import SearchBar from '../components/Searchbar/SearchBar';
+import Cards from '../components/Cards/Cards';
 import data from '../assets/data.json';
 
 class Home extends React.Component {

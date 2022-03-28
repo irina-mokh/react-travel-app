@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from '../components/Card';
-import { CardsProps } from '../types';
+import Card from '../Card/Card';
+import { CardsProps } from '../../types';
 
 class Cards extends React.Component<CardsProps> {
   constructor(props: CardsProps) {

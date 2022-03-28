@@ -31,7 +31,8 @@ class SearchBar extends React.Component<SearchProps, SearchState> {
         type="search"
         className="search"
         onChange={this.handleChange}
-        placeholder="Enter a country"
+        placeholder="Search..."
+        aria-label="search"
         value={this.state.value}
       />
     );
