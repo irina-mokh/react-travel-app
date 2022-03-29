@@ -5,7 +5,7 @@ import About from '../pages/Aboutpage';
 import NotFound from '../pages/Notfound';
 import Layout from './Layout/Layout';
 
-class App extends React.Component {
+class AppRouter extends React.Component {
   render() {
     return (
       <Routes>
@@ -19,4 +19,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default AppRouter;

@@ -1,13 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import AppRouter from './components/AppRouter';
 import { MemoryRouter } from 'react-router-dom';
+import App from './App';
 
-test('renders welcome', () => {
-  // render(
-  //   <MemoryRouter>
-  //     <AppRouter />
-  //   </MemoryRouter>
-  // );
-  // const elem = screen.getByText(/home/i);
-  // expect(elem).toBeInTheDocument();
+describe('App', () => {
+  test('render without crash', async () => {
+    render(
+      <MemoryRouter>
+        <AppRouter />
+      </MemoryRouter>
+    );
+  });
 });

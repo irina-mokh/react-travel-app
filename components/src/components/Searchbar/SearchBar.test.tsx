@@ -4,18 +4,26 @@ import AppRouter from '../AppRouter';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Search bar', () => {
-  render(
-    <MemoryRouter>
-      <AppRouter />
-    </MemoryRouter>
-  );
-  const elem = screen.getByLabelText('search');
   it('renders', () => {
+    render(
+      <MemoryRouter>
+        <AppRouter />
+      </MemoryRouter>
+    );
+    const elem = screen.getByLabelText('search');
     expect(elem).toBeInTheDocument();
   });
 
   it('updates', () => {
-    // userEvent.type(elem, 'Hello, World!');
-    // expect(elem).toHaveValue('Hello, World!');
+    render(
+      <MemoryRouter>
+        <AppRouter />
+      </MemoryRouter>
+    );
+    const elem = screen.getByLabelText('search');
+    const test = 'Hello, World!';
+    userEvent.clear(elem);
+    userEvent.type(elem, test);
+    expect(screen.getByLabelText('search')).toHaveValue(test);
   });
 });
