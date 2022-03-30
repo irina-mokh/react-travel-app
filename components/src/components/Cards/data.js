@@ -1,9 +1,9 @@
-import JPFlag from '../../assets/flags/japan.svg';
-import AUFlag from '../../assets/flags/australia.svg';
-import BRFlag from '../../assets/flags/brazil.svg';
-import CUflag from '../../assets/flags/cuba.svg';
-import DKFlag from '../../assets/flags/denmark.svg';
-import ENFlag from '../../assets/flags/england.svg';
+import JPFlag from '../../assets/images/flags/japan.svg';
+import AUFlag from '../../assets/images/flags/australia.svg';
+import BRFlag from '../../assets/images/flags/brazil.svg';
+import CUflag from '../../assets/images/flags/cuba.svg';
+import DKFlag from '../../assets/images/flags/denmark.svg';
+import ENFlag from '../../assets/images/flags/england.svg';
 
 export const data = [
   {
