@@ -1,0 +1,8 @@
+@use '../../styles/vars.scss';
+
+.footer {
+  background-color: vars.$jet;
+  color: white;
+  padding: 1em;
+  text-align: center;
+}

@@ -1,15 +1,12 @@
 import React from 'react';
-import './App.scss';
-import AppRouter from './components/AppRouter';
+import { AppRouter } from './components/AppRouter';
 
-class App extends React.Component {
+export class App extends React.Component {
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <AppRouter />
       </div>
     );
   }
 }
-
-export default App;

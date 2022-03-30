@@ -1,0 +1,15 @@
+@use '../../styles/vars.scss';
+
+.header {
+  background-color: vars.$jet;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: white;
+  &__logo {
+    max-height: 90%;
+  }
+  &__nav {
+    display: flex;
+  }
+}

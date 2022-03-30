@@ -1,0 +1,48 @@
+@use '../../styles/vars.scss';
+
+.search-bar {
+  position: relative;
+
+  .search{
+    font-size: 1.3em;
+    background-color: vars.$jet;
+    padding: 7px 10px 7px 20px;
+    color: vars.$snow;
+    border: 2px solid transparent;
+    border-radius: 1em;
+    opacity: 0.8;
+    outline-color: vars.$green;
+    &:hover {
+      opacity: 1;
+    }
+    &:focus {
+      opacity: 1;
+    }
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+    }
+  }
+
+  & .search:focus ~ &__clear {
+    opacity: 1;
+  }
+
+  &__clear {
+    opacity: 0;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    margin-top: -12px;
+    border: none;
+    background-color: transparent;
+     
+    filter: vars.$filter-snow;
+    z-index: 2;
+    cursor: pointer;
+  }
+  &__clear-icon {
+    object-fit: contain;
+  }
+}

@@ -1,18 +1,9 @@
-import React from 'react';
-import Card from '../Card/Card';
-import { CardsProps } from '../../types';
+import { Card } from '../Card/Card';
+import { data } from './data';
 
-class Cards extends React.Component<CardsProps> {
-  constructor(props: CardsProps) {
-    super(props);
-  }
-  render() {
-    const items = this.props.value;
-    const cards = items.map((item) => {
-      return <Card key={item.id} value={item} />;
-    });
-    return <ul className="cards">{cards}</ul>;
-  }
+export function Cards() {
+  const cards = data.map((item) => {
+    return <Card key={item.id} value={item} />;
+  });
+  return <ul className="cards">{cards}</ul>;
 }
-
-export default Cards;
