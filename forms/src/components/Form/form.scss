@@ -1,0 +1,33 @@
+.form {
+  display: grid;
+  grid-template-areas: 
+    "name date"
+    "country alone"
+    "description upload"
+    "purpose submit";
+  width: 500px;
+  &__name {
+    grid-area: name;
+  }
+  &__country {
+    grid-area: country;
+  }
+  &__description {
+    grid-area: description;
+  }
+  &__purpose {
+    grid-area: purpose;
+  }
+  &__date {
+    grid-area: date;
+  }
+  &__alone {
+    grid-area: alone;
+  }
+  &__upload {
+    grid-area: upload;
+  }
+  &__submit{
+    grid-area: submit;
+  }
+}

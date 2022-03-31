@@ -13,6 +13,9 @@ export function Header() {
         <Link className="app__link" to="/about">
           About
         </Link>
+        <Link className="app__link" to="/visits">
+          Visits
+        </Link>
       </nav>
     </header>
   );
