@@ -5,6 +5,7 @@ import { DateInput } from '../DateInput/DateInput';
 import { Select } from '../Select/Select';
 import { Checkbox } from '../Checkbox/Checkbox';
 import { Switcher } from '../Switcher/Switcher';
+import { Upload } from '../Upload/Upload';
 
 interface FormProps {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -24,6 +25,7 @@ export interface FormState {
   country: React.RefObject<HTMLSelectElement>;
   alone: React.RefObject<HTMLSelectElement>;
   purpose: React.RefObject<HTMLInputElement>;
+  upload: React.RefObject<HTMLInputElement>;
 }
 
 export class Form extends React.Component<FormProps, FormState> {
@@ -34,6 +36,7 @@ export class Form extends React.Component<FormProps, FormState> {
   country: React.RefObject<HTMLSelectElement>;
   alone: React.RefObject<HTMLInputElement>;
   purpose: React.RefObject<HTMLInputElement>;
+  upload: React.RefObject<HTMLInputElement>;
   constructor(props: FormProps) {
     super(props);
     this.name = React.createRef();
@@ -43,6 +46,7 @@ export class Form extends React.Component<FormProps, FormState> {
     this.country = React.createRef();
     this.alone = React.createRef();
     this.purpose = React.createRef();
+    this.upload = React.createRef();
   }
 
   render() {
@@ -59,13 +63,14 @@ export class Form extends React.Component<FormProps, FormState> {
         <Select name="country" label="Country:" placeholder="Country" innerRef={this.country} />
         <Checkbox name="alone" label="Alone" innerRef={this.alone} />
         <Switcher name="purpose" label="Purpose:" innerRef={this.purpose} />
+        <Upload name="upload" label="Upload a photo:" innerRef={this.upload} />
         <TextArea
           name="description"
           label="Impression:"
           placeholder="Give a short description for your trip"
           innerRef={this.description}
         />
-        <input className="form__submit" type="submit" value="post" />
+        <input className="btn form__submit btn_disabled" type="submit" value="post" />
       </form>
     );
   }

@@ -3,11 +3,11 @@
 .form {
   display: grid;
   grid-template-areas: 
-    "name country"
-    "date purpose"
-    "title alone"
-    "description description"
-    "upload submit";
+    "name country country"
+    "date purpose purpose"
+    "title alone upload"
+    "description description description"
+    "submit submit submit";
   width: 500px;
   text-align: left;
   border: 2px solid vars.$green;
@@ -22,15 +22,45 @@
     padding: 0;
   }
 
-  &__submit{
-    grid-area: submit;
-    background-color: vars.$orange;
-    color: vars.$snow;
-    border: none;
+  .btn {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 34px;
+    border: 2px solid vars.$green;
     border-radius: 1.4em;
-    height: 2.8em;
+    background-color: vars.$green;
+    color: vars.$snow;
     font-weight: 700;
     text-transform: uppercase;
+    &:hover {
+      background-color: vars.$snow;
+      color: vars.$green;
+    }
+    &:active{
+      background-color: vars.$light-gray;
+    }
+    &_disabled {
+      background-color: vars.$gray;
+      border-color: vars.$gray;
+      color: vars.$snow;
+      &:hover{
+        background-color: vars.$gray;
+        border-color: vars.$gray;
+        color: vars.$snow;
+      }
+      &:active{
+        background-color: vars.$gray;
+        border-color: vars.$gray;
+        color: vars.$snow;
+      }
+    }
+  }
+
+  &__submit{
+    grid-area: submit;
   }
 }
 
