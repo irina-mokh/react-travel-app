@@ -1,0 +1,11 @@
+@use '../../styles/vars.scss';
+
+
+.name {
+  grid-area: name;
+  width: 100%;
+}
+.title {
+  grid-area: title;
+  width: 100%;
+}

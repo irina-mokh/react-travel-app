@@ -1,33 +1,54 @@
+@use '../../styles/vars.scss';
+
 .form {
   display: grid;
   grid-template-areas: 
-    "name date"
-    "country alone"
-    "description upload"
-    "purpose submit";
+    "name country"
+    "date purpose"
+    "title alone"
+    "description description"
+    "upload submit";
   width: 500px;
-  &__name {
-    grid-area: name;
+  text-align: left;
+  border: 2px solid vars.$green;
+  padding: 1.5em;
+  border-radius: 1em;
+  background-color: vars.$light-gray;
+  box-sizing: border-box;
+  gap: 0.8em;
+
+  &__block {
+    border: none;
+    padding: 0;
   }
-  &__country {
-    grid-area: country;
-  }
-  &__description {
-    grid-area: description;
-  }
-  &__purpose {
-    grid-area: purpose;
-  }
-  &__date {
-    grid-area: date;
-  }
-  &__alone {
-    grid-area: alone;
-  }
-  &__upload {
-    grid-area: upload;
-  }
+
   &__submit{
     grid-area: submit;
+    background-color: vars.$orange;
+    color: vars.$snow;
+    border: none;
+    border-radius: 1.4em;
+    height: 2.8em;
+    font-weight: 700;
+    text-transform: uppercase;
   }
+}
+
+.field {
+  display: block;
+  border: 2px solid vars.$green;
+  height: 30px;
+  width: 100%;
+  padding: 3px 7px;
+  border-radius: 1.2em;
+  background-color: vars.$snow;
+  box-sizing: border-box;
+}
+
+.label {
+  display: block;
+  color: vars.$jet;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-bottom: 5px;
 }

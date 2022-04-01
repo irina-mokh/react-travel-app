@@ -1,15 +1,14 @@
 import React from 'react';
 import { InputProps } from '../Form/Form';
 
-interface TextInputProps extends InputProps {
+interface DateInputProps extends InputProps {
   innerRef: React.ForwardedRef<HTMLInputElement>;
 }
 
-export class TextInput extends React.Component<TextInputProps> {
-  constructor(props: TextInputProps) {
+export class DateInput extends React.Component<DateInputProps> {
+  constructor(props: DateInputProps) {
     super(props);
   }
-
   render() {
     return (
       <fieldset className={`form__block ${this.props.name}`}>
@@ -18,7 +17,7 @@ export class TextInput extends React.Component<TextInputProps> {
         </label>
         <input
           className={`field ${this.props.name}__input`}
-          type="text"
+          type="date"
           id={this.props.name}
           placeholder={this.props.placeholder}
           ref={this.props.innerRef}

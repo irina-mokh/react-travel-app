@@ -1,0 +1,42 @@
+@use '../../styles/vars.scss';
+
+.purpose {
+  grid-area: purpose;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__input {
+    display: none;
+    &:checked ~ .switcher__bar::after {
+      transform: translateX(18px);
+    }
+  }
+}
+
+.switcher {
+  display: flex;
+  &__text{
+    display: inline-block;
+  }
+  &__bar {
+    display: inline-block;
+    width: 40px;
+    border-radius: 1em;
+    background-color: vars.$snow;
+    border: 2px solid vars.$green;
+    margin: 0 7px;
+    &::after {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: vars.$green;
+      transform: translateX(0);
+      margin: 2px;
+      transition: transform ease 0.2s;
+    }
+
+  }
+}

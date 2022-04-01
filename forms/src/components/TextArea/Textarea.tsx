@@ -1,12 +1,12 @@
 import React from 'react';
 import { InputProps } from '../Form/Form';
 
-interface TextInputProps extends InputProps {
-  innerRef: React.ForwardedRef<HTMLInputElement>;
+interface TextAreaProps extends InputProps {
+  innerRef: React.ForwardedRef<HTMLTextAreaElement>;
 }
 
-export class TextInput extends React.Component<TextInputProps> {
-  constructor(props: TextInputProps) {
+export class TextArea extends React.Component<TextAreaProps> {
+  constructor(props: TextAreaProps) {
     super(props);
   }
 
@@ -16,9 +16,8 @@ export class TextInput extends React.Component<TextInputProps> {
         <label className="label" htmlFor={this.props.name}>
           {this.props.label}
         </label>
-        <input
+        <textarea
           className={`field ${this.props.name}__input`}
-          type="text"
           id={this.props.name}
           placeholder={this.props.placeholder}
           ref={this.props.innerRef}
