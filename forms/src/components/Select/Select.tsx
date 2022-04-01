@@ -280,6 +280,7 @@ export class Select extends React.Component<SelectProps> {
           id={this.props.name}
           placeholder={this.props.placeholder}
           ref={this.props.innerRef}
+          required
         >
           {data}
         </select>

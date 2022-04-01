@@ -21,6 +21,7 @@ export class DateInput extends React.Component<DateInputProps> {
           id={this.props.name}
           placeholder={this.props.placeholder}
           ref={this.props.innerRef}
+          required
         />
       </fieldset>
     );

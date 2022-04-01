@@ -21,6 +21,7 @@ export class TextArea extends React.Component<TextAreaProps> {
           id={this.props.name}
           placeholder={this.props.placeholder}
           ref={this.props.innerRef}
+          required
         />
       </fieldset>
     );

@@ -42,21 +42,6 @@
     &:active{
       background-color: vars.$light-gray;
     }
-    &_disabled {
-      background-color: vars.$gray;
-      border-color: vars.$gray;
-      color: vars.$snow;
-      &:hover{
-        background-color: vars.$gray;
-        border-color: vars.$gray;
-        color: vars.$snow;
-      }
-      &:active{
-        background-color: vars.$gray;
-        border-color: vars.$gray;
-        color: vars.$snow;
-      }
-    }
   }
 
   &__submit{
