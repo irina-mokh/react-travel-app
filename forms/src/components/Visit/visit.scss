@@ -1,0 +1,72 @@
+@use '../../styles/vars.scss';
+
+.visitList {
+  padding: 0;
+  max-width: 80%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1em;
+}
+
+.visit {
+  list-style: none;
+  width: 250px;
+  padding: 0.7em;
+  border: 2px solid vars.$gray;
+  border-radius: 0.5em;
+  background-color: vars.$light-gray;
+
+  & > * {
+    margin: 0;
+  }
+
+  &__image {
+    width: 100%;
+    margin: 0 0 0.5em 0;
+  }
+
+  &__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & > * {
+      margin: 0;
+    }
+  }
+
+  &__country {
+    font-weight: 700;
+  }
+
+  &__date {
+    font-style: italic;
+    font-size: 0.8em;
+    color: vars.$jet;
+  }
+
+  &__title {
+    font-size: 1.2em;
+    margin: 5px 0;
+  }
+
+  &__name {
+    text-align: left;
+    font-weight: 500;
+    color: vars.$green;
+  }
+
+  &__description {
+    font-style: italic;
+    text-align: left;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__purpose, &__alone {
+    width: 25px;
+    height: 25px;
+    filter: vars.$filter-green;
+  }
+}
