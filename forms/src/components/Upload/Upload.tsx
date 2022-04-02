@@ -5,21 +5,25 @@ interface UploadProps extends InputProps {
   innerRef: React.ForwardedRef<HTMLInputElement>;
   btnText?: string;
 }
-
-export class Upload extends React.Component<UploadProps> {
+interface UploadState {
   btnText: string;
+}
+
+export class Upload extends React.Component<UploadProps, UploadState> {
   constructor(props: UploadProps) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.btnText = 'Upload a photo';
+    this.state = {
+      btnText: 'Upload a photo',
+    };
   }
   handleChange() {
     const input = this.props.innerRef as MutableRefObject<HTMLInputElement>;
     const path = input.current.value;
+    const fileName = path.replace(/^.*[\\\/]/, '');
     if (path) {
       this.setState({
-        btnText: 'File uploded!',
-        // TODO: change btn text
+        btnText: fileName,
       });
     }
   }
@@ -27,7 +31,7 @@ export class Upload extends React.Component<UploadProps> {
     return (
       <fieldset className={`form__block ${this.props.name}`}>
         <label className="btn" htmlFor={this.props.name}>
-          {this.btnText}
+          {this.state.btnText}
         </label>
         <input
           type="file"
