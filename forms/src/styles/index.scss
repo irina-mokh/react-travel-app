@@ -1,6 +1,6 @@
 @use './vars.scss';
 @use './mixins.scss';
-@use '../app.scss';
+@use '../components/App/app.scss';
 @use '../components/Header/header.scss';
 @use '../components/Footer/footer.scss';
 @use '../components/Searchbar/searchbar.scss';

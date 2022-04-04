@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputProps } from '../Form/Form';
+import { InputProps } from '../../types';
 
 interface DateInputProps extends InputProps {
   innerRef: React.ForwardedRef<HTMLInputElement>;

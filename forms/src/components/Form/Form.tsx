@@ -23,12 +23,6 @@ export interface FormState {
   upload: React.RefObject<HTMLInputElement>;
 }
 
-export interface InputProps {
-  name: string;
-  label: string;
-  placeholder?: string;
-}
-
 export class Form extends React.Component<FormProps, FormState> {
   constructor(props: FormProps) {
     super(props);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputProps } from '../Form/Form';
+import { InputProps } from '../../types';
 
 interface SelectProps extends InputProps {
   innerRef: React.ForwardedRef<HTMLSelectElement>;

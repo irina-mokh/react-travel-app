@@ -1,5 +1,5 @@
 import React, { MutableRefObject } from 'react';
-import { InputProps } from '../Form/Form';
+import { InputProps } from '../../types';
 
 interface UploadProps extends InputProps {
   innerRef: React.ForwardedRef<HTMLInputElement>;
