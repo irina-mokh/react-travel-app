@@ -1,7 +1,7 @@
 import React from 'react';
-import { InputProps } from '../../types';
+import { iInput } from '../../types';
 
-interface CheckboxProps extends InputProps {
+interface CheckboxProps extends iInput {
   innerRef: React.ForwardedRef<HTMLInputElement>;
 }
 

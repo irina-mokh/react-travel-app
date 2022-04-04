@@ -1,7 +1,7 @@
 import React, { MutableRefObject } from 'react';
-import { InputProps } from '../../types';
+import { iInput } from '../../types';
 
-interface UploadProps extends InputProps {
+interface UploadProps extends iInput {
   innerRef: React.ForwardedRef<HTMLInputElement>;
   btnText?: string;
 }
@@ -19,14 +19,14 @@ export class Upload extends React.Component<UploadProps, UploadState> {
   }
   handleChange() {
     const input = this.props.innerRef as MutableRefObject<HTMLInputElement>;
+    console.log(input.current.value);
     const path = input.current.value;
-    const fileName = path.replace(/^.*[\\\/]/, '');
-    if (path) {
-      this.setState({
-        btnText: fileName,
-      });
-    }
+    const fileName = path ? path.replace(/^.*[\\\/]/, '') : 'Upload file';
+    this.setState({
+      btnText: fileName,
+    });
   }
+
   render() {
     return (
       <fieldset className={`form__block ${this.props.name}`}>

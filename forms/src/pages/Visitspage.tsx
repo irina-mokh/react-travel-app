@@ -1,16 +1,17 @@
 import { Form } from '../components/Form/Form';
 import React from 'react';
 import { FormState } from '../components/Form/Form';
-import { Visit, VisitState } from '../components/Visit/Visit';
+import { Visit } from '../components/Visit/Visit';
 import { testVisit } from '../components/Visit/testVisit';
+import { iVisit } from '../types';
 
 interface VisitsProps {
   value?: string;
 }
 
 interface VisitsState {
-  form: FormState;
-  visits: VisitState[] | [];
+  formRefs: FormState;
+  visits: iVisit[] | [];
 }
 
 export class Visits extends React.Component<VisitsProps, VisitsState> {
@@ -18,52 +19,64 @@ export class Visits extends React.Component<VisitsProps, VisitsState> {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      form: {
-        name: React.createRef(),
-        title: React.createRef(),
-        description: React.createRef(),
-        date: React.createRef(),
-        country: React.createRef(),
-        alone: React.createRef(),
-        purpose: React.createRef(),
-        upload: React.createRef(),
+      formRefs: {
+        name: React.createRef<HTMLInputElement>(),
+        title: React.createRef<HTMLInputElement>(),
+        description: React.createRef<HTMLTextAreaElement>(),
+        date: React.createRef<HTMLInputElement>(),
+        country: React.createRef<HTMLSelectElement>(),
+        alone: React.createRef<HTMLInputElement>(),
+        purpose: React.createRef<HTMLInputElement>(),
+        upload: React.createRef<HTMLInputElement>(),
       },
       visits: [],
     };
   }
 
-  handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log('submit');
-    const item: FormState = this.state.form;
-    if (
-      item.name.current &&
-      item.title.current &&
-      item.date.current &&
-      item.country.current &&
-      item.alone.current &&
-      item.description.current &&
-      item.purpose.current &&
-      item.upload.current
-    ) {
-      const formData = {
-        name: item.name.current.value,
-        title: item.title.current.value,
-        description: item.description.current.value,
-        date: item.date.current.value,
-        country: item.country.current.value,
-        alone: item.alone.current.value === 'on',
-        purpose: item.alone.current.value ? 'Travel' : 'Business',
-        upload: item.upload.current.value,
-      };
-      const updatedVisits: VisitState[] = this.state.visits;
-      updatedVisits.push(formData);
-      this.setState({
-        visits: updatedVisits,
-      });
-      //TODO: create cards
+    const item: FormState = this.state.formRefs;
+    const updatedVisits: iVisit[] = this.state.visits;
+    const reader = new FileReader();
+    const files = item.upload.current?.files;
+    if (files) {
+      reader.readAsDataURL(files[0]);
     }
+    reader.addEventListener('loadend', () => {
+      if (
+        item.name.current &&
+        item.title.current &&
+        item.date.current &&
+        item.country.current &&
+        item.alone.current &&
+        item.description.current &&
+        item.purpose.current &&
+        item.upload.current
+      ) {
+        const formData = {
+          name: item.name.current.value,
+          title: item.title.current.value,
+          description: item.description.current.value,
+          date: item.date.current.value,
+          country: item.country.current.value,
+          alone: item.alone.current.checked,
+          purpose: item.purpose.current.checked ? 'Travel' : 'Business',
+          upload: reader.result as string,
+        };
+
+        updatedVisits.push(formData);
+        this.setState({
+          visits: updatedVisits,
+        });
+
+        (e.target as HTMLFormElement).reset();
+        // DOM manipulation just to change btn text, because reset doesn't fires onChange on uncontrolled component
+        const fileInputLabel = document.querySelector('.upload .btn') as HTMLLabelElement;
+        fileInputLabel.innerText = 'Upload a photo';
+      }
+    });
   }
+
   render() {
     const cards = this.state.visits.map((item, index) => {
       return <Visit key={`${index}`} value={item} />;
@@ -72,7 +85,7 @@ export class Visits extends React.Component<VisitsProps, VisitsState> {
     return (
       <>
         <h2>Post your visit of a country!</h2>
-        <Form handleSubmit={this.handleSubmit} data={this.state.form} />
+        <Form handleSubmit={this.handleSubmit} data={this.state.formRefs} />
         <ul className="visitList">
           <Visit key="test" value={testVisit} />
           {cards}

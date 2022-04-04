@@ -1,7 +1,7 @@
 import React from 'react';
-import { InputProps } from '../../types';
+import { iInput } from '../../types';
 
-interface SelectProps extends InputProps {
+interface SelectProps extends iInput {
   innerRef: React.ForwardedRef<HTMLSelectElement>;
 }
 

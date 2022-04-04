@@ -1,7 +1,7 @@
 import React from 'react';
-import { InputProps } from '../../types';
+import { iInput } from '../../types';
 
-interface TextInputProps extends InputProps {
+interface TextInputProps extends iInput {
   innerRef: React.ForwardedRef<HTMLInputElement>;
 }
 

@@ -22,6 +22,8 @@
 
   &__image {
     width: 100%;
+    height: 150px;
+    object-fit: cover;
     margin: 0 0 0.5em 0;
   }
 
@@ -63,10 +65,15 @@
   &__footer {
     display: flex;
     justify-content: flex-end;
+    margin-top: 5px;
   }
   &__purpose, &__alone {
     width: 25px;
     height: 25px;
     filter: vars.$filter-green;
+    margin-right: 7px;
+    img{
+      width: 100%;
+    }
   }
 }

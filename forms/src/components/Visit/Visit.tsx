@@ -2,20 +2,10 @@ import oneIco from '../../assets/icons/one.svg';
 import groupIco from '../../assets/icons/group.svg';
 import businessIco from '../../assets/icons/business.svg';
 import travelIco from '../../assets/icons/travel.svg';
+import { iVisit } from '../../types';
 
 interface VisitProps {
-  value: VisitState;
-}
-
-export interface VisitState {
-  name: string;
-  title: string;
-  date: string;
-  description: string;
-  country: string;
-  purpose: string;
-  alone: boolean;
-  upload: string;
+  value: iVisit;
 }
 
 export function Visit(props: VisitProps): JSX.Element {

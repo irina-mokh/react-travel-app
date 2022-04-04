@@ -1,7 +1,7 @@
 import React from 'react';
-import { InputProps } from '../../types';
+import { iInput } from '../../types';
 
-interface SwitcherProps extends InputProps {
+interface SwitcherProps extends iInput {
   innerRef: React.ForwardedRef<HTMLInputElement>;
 }
 
