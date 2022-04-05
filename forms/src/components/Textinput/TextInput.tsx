@@ -24,6 +24,7 @@ export class TextInput extends React.Component<TextInputProps> {
           ref={this.props.innerRef}
           required
         />
+        <span className="form__error">{this.props.error}</span>
       </fieldset>
     );
   }

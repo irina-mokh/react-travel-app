@@ -23,6 +23,16 @@
     padding: 0;
   }
 
+  &__error {
+    display: block;
+    height: 10px;
+    padding: 0;
+    margin: 2px 10px;
+    line-height: 0.8em;
+    color: vars.$red;
+    font-size: 0.8em;
+  }
+
   .btn {
     box-sizing: border-box;
     display: flex;
@@ -47,6 +57,11 @@
 
   &__submit{
     grid-area: submit;
+    &:disabled {
+      background-color: vars.$gray;
+      border: 2px solid vars.$gray;
+
+    }
   }
 }
 

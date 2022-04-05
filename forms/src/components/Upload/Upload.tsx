@@ -17,9 +17,9 @@ export class Upload extends React.Component<UploadProps, UploadState> {
       btnText: 'Upload a photo',
     };
   }
+
   handleChange() {
     const input = this.props.innerRef as MutableRefObject<HTMLInputElement>;
-    console.log(input.current.value);
     const path = input.current.value;
     const fileName = path ? path.replace(/^.*[\\\/]/, '') : 'Upload file';
     this.setState({

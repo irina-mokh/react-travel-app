@@ -1,16 +1,18 @@
 import React from 'react';
-import { iInput } from '../../types';
+import { iInput, iInputState } from '../../types';
 
 interface DateInputProps extends iInput {
-  innerRef: React.ForwardedRef<HTMLInputElement>;
+  innerRef: React.RefObject<HTMLInputElement>;
 }
 
-export class DateInput extends React.Component<DateInputProps> {
+const today = new Date();
+
+export class DateInput extends React.Component<DateInputProps, iInputState> {
   constructor(props: DateInputProps) {
     super(props);
   }
+
   render() {
-    const today = new Date();
     return (
       <fieldset className={`form__block ${this.props.name}`}>
         <label className="label" htmlFor={this.props.name}>
@@ -25,6 +27,7 @@ export class DateInput extends React.Component<DateInputProps> {
           required
           max={today.toISOString().split('T')[0]}
         />
+        <span className="form__error">{this.props.error}</span>
       </fieldset>
     );
   }

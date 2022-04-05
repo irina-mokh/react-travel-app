@@ -1,11 +1,11 @@
 import React from 'react';
-import { iInput } from '../../types';
+import { iInput, iInputState } from '../../types';
 
 interface TextAreaProps extends iInput {
   innerRef: React.ForwardedRef<HTMLTextAreaElement>;
 }
 
-export class TextArea extends React.Component<TextAreaProps> {
+export class TextArea extends React.Component<TextAreaProps, iInputState> {
   constructor(props: TextAreaProps) {
     super(props);
   }
@@ -23,6 +23,7 @@ export class TextArea extends React.Component<TextAreaProps> {
           ref={this.props.innerRef}
           required
         />
+        <span className="form__error">{this.props.error}</span>
       </fieldset>
     );
   }
