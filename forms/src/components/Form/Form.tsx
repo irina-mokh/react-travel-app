@@ -8,6 +8,8 @@ import { Switcher } from '../Switcher/Switcher';
 import { Upload } from '../Upload/Upload';
 import { iErrors, iFormRefs, iVisit } from '../../types';
 
+const a = 1;
+
 interface FormProps {
   data: iVisit;
   refs: iFormRefs;
@@ -91,6 +93,8 @@ export class Form extends React.Component<FormProps, FormState> {
           value="post"
           disabled={this.state.submitDisabled}
         />
+
+        {a}
       </form>
     );
   }

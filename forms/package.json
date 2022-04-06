@@ -15,7 +15,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-prettier": "^4.0.0",
-    "husky": "^7.0.4",
     "lint-staged": "^12.1.2",
     "prettier": "^2.5.1",
     "react": "^17.0.2",
@@ -30,7 +29,20 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --color src/",
+    "lint:fix": "eslint --fix --color src/"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,scss,css,md}": [
+      "npm run lint:fix",
+      "prettier --write"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +64,7 @@
   },
   "devDependencies": {
     "css-loader": "^6.7.1",
+    "husky": "^7.0.4",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2"
   }
