@@ -1,52 +1,44 @@
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 import { ReactComponent as Close } from '../../assets/icons/close.svg';
 interface SearchProps {
   value?: string;
+  innerRef: React.ForwardedRef<HTMLInputElement>;
+  handleSubmit: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-interface SearchState {
-  value: string;
-}
-
-export class SearchBar extends React.Component<SearchProps, SearchState> {
+export class SearchBar extends React.Component<SearchProps> {
   constructor(props: SearchProps) {
     super(props);
-    this.state = {
-      value: localStorage.getItem('search') || '',
-    };
-    this.handleChange = this.handleChange.bind(this);
     this.clear = this.clear.bind(this);
   }
-
-  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ value: e.target?.value });
-  }
-
-  componentWillUnmount() {
-    localStorage.setItem('search', this.state.value);
-  }
-
   clear() {
-    console.log('clear');
-    this.setState({ value: '' });
+    const input = this.props.innerRef as MutableRefObject<HTMLInputElement | null>;
+    if (input.current) {
+      input.current.value = '';
+      localStorage.setItem('search', '');
+    }
   }
-
   render() {
-    console.log(this.state.value);
     return (
-      <div className="search-bar">
+      <form className="search-bar">
         <input
           type="search"
           className="search"
-          onChange={this.handleChange}
+          defaultValue={localStorage.getItem('search') || ' '}
           placeholder="Search..."
           aria-label="search"
-          value={this.state.value}
+          ref={this.props.innerRef}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              this.props.handleSubmit(e);
+            }
+          }}
         />
         <button className="search-bar__clear" onClick={this.clear}>
           <Close className="search-bar__clear__icon" />
         </button>
-      </div>
+      </form>
     );
   }
 }

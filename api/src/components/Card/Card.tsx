@@ -2,11 +2,11 @@ interface CardProps {
   value: CardInfo;
 }
 
-interface CardInfo {
+export interface CardInfo {
   id: number;
   title: string;
   capital: string;
-  currencies: {
+  currency: {
     name: string;
     symbol: string;
   };
@@ -27,8 +27,8 @@ export function Card(props: CardProps): JSX.Element {
         <div className="card__flag">
           <img src={item.image} alt={`${item.title} flag`} />
         </div>
-        <p className="card__currency">{item.currencies.name}</p>
-        <p className="card__symbol">{item.currencies.symbol}</p>
+        <p className="card__currency">{item.currency.name}</p>
+        <p className="card__symbol">{item.currency.symbol}</p>
       </li>
     </>
   );
