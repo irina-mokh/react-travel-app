@@ -1,0 +1,102 @@
+@use '../../styles/vars.scss';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000095;
+  z-index: 5;
+}
+
+.modal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  position: relative;
+  max-width: 500px;
+  min-height: 300px;
+  margin: auto;
+  margin-top: 6em;
+  background-color: #ececec;
+  border: 2px solid vars.$green;
+  border-radius: 0.8em;
+  padding: 1.5em;
+
+  &__title {
+    margin: 3px 0;
+    color: vars.$green;
+    font-size: 1.4em;
+  }
+  &__official-title {
+    font-style: italic;
+  }
+  &__flag {
+    order: 1;
+    grid-row: 1 / 3;
+    & img {
+      display: block;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+
+    }
+  }
+  &__coat-of-arms {
+
+    & img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__currencies {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__symbol {
+    font-size: 1.2em;
+    font-weight: 700;
+  }
+  tr td:first-child {
+    font-size: 0.8em;
+    font-style: italic;
+    color: vars.$jet;
+  }
+
+  &__close {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    background-color: transparent;
+    border: none;
+    &:hover {
+      color: vars.$green;
+    }
+  }
+
+  @media (max-width: vars.$mediumScreen) and (min-width: vars.$smallScreen) {
+    grid-template-columns: 1fr 2fr;
+  }
+  @media (max-width: vars.$smallScreen) {
+    grid-template-rows: 100px auto;
+    gap: 1em;
+    &__flag {
+      order: 1;
+      grid-row: 1 / 2;
+    }
+    &__coat-of-arms {
+      grid-row: 1 / 2;
+      order: 2;
+      & img {
+        
+        object-fit: contain;
+      }
+    }
+
+    &__table {
+      grid-column: 1 / 3;
+    }
+  }
+  
+}

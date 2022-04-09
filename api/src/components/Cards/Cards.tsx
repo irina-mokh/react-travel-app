@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from '../Card/Card';
 import { iCountryInfo } from '../../types';
+import { Loading } from '../Loading/Loading';
 
 interface CardsProps {
   query: string;
@@ -39,7 +40,6 @@ export class Cards extends React.Component<CardsProps, CardsState> {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data);
       this.setState({
         data: data,
         isLoaded: true,
@@ -61,7 +61,7 @@ export class Cards extends React.Component<CardsProps, CardsState> {
     let content = <div>No results</div>;
 
     if (!isLoaded) {
-      content = <div> Loading ...</div>;
+      content = <Loading />;
     } else if (isData) {
       const cards = data.map((item) => {
         const data = {
