@@ -1,8 +1,8 @@
-interface CardProps {
-  value: CardInfo;
+interface CountryCardProps {
+  value: CountryCardInfo;
 }
 
-interface CardInfo {
+interface CountryCardInfo {
   id: number;
   title: string;
   capital: string;
@@ -15,7 +15,7 @@ interface CardInfo {
   image: string;
 }
 
-export function Card(props: CardProps): JSX.Element {
+export function CountryCard(props: CountryCardProps): JSX.Element {
   const item = props.value;
   return (
     <>

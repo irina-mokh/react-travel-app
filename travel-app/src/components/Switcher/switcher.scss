@@ -1,13 +1,13 @@
-@use '../../styles/vars.scss';
+@use '../../styles/vars';
 
 .purpose {
   grid-area: purpose;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
 
   &__input {
-    display: none;
+    // display: none;
     &:checked ~ .switcher__bar::after {
       transform: translateX(18px);
     }

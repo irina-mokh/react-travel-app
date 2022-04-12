@@ -1,11 +1,10 @@
-@use './vars.scss';
-@use './mixins.scss';
+@use './global.scss';
 @use '../components/App/app.scss';
 @use '../components/Header/header.scss';
 @use '../components/Footer/footer.scss';
 @use '../components/Searchbar/searchbar.scss';
-@use '../components/Card/card.scss';
-@use '../components/Cards/cards.scss';
+@use '../components/CountryCard/countryCard.scss';
+@use '../components/CountryCardsList/countryCardsList.scss';
 @use '../components/Form/form.scss';
 @use '../components/Textinput/textinput.scss';
 @use '../components/TextArea/textarea.scss';
@@ -14,4 +13,5 @@
 @use '../components/DateInput/dateinput.scss';
 @use '../components/Switcher/switcher.scss';
 @use '../components/Upload/upload.scss';
-@use '../components/Visit/visit.scss';
+@use '../components/VisitCardsList/visitCardsList.scss';
+@use '../components/Github/github.scss';

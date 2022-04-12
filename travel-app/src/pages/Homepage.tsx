@@ -1,12 +1,12 @@
-import { SearchBar } from '../components/Searchbar/SearchBar';
-import { Cards } from '../components/Cards/Cards';
+import { SearchBar } from '../components/Searchbar';
+import { CountryCardsList } from '../components/CountryCardsList';
 
 export function Home() {
   return (
     <>
       <h2>Welcome to the homepage!</h2>
       <SearchBar />
-      <Cards />
+      <CountryCardsList />
     </>
   );
 }

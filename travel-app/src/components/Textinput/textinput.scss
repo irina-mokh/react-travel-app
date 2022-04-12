@@ -1,11 +1,12 @@
-@use '../../styles/vars.scss';
+.form__text {
+  &_name {
+    grid-area: name;
+    width: 100%;
+  }
+  
+  &_title {
+    grid-area: title;
+    width: 100%;
+  }
 
-
-.name {
-  grid-area: name;
-  width: 100%;
-}
-.title {
-  grid-area: title;
-  width: 100%;
 }

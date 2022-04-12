@@ -1,0 +1,21 @@
+@use '../../styles/vars';
+
+.github {
+  display: flex;
+  text-decoration: none;
+  transition: all 0.3s;
+  align-items: center;
+  &__icon {
+    display: inline-block;
+    content: '';
+    filter: vars.$filter-jet;
+  }
+
+  &__text {
+    margin: 0 0 0 10px;
+    font-family: inherit;
+    font-size: 1.2em;
+    color: vars.$jet;
+  }
+}
+

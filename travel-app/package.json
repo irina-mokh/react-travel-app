@@ -31,7 +31,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --color src/",
-    "lint:fix": "eslint --fix --color src/"
+    "lint:fix": "eslint --fix --max-warnings=0 --color src/",
+    "prepare": "cd ../ && husky install ./travel-app/.husky"
   },
   "husky": {
     "hooks": {
@@ -39,8 +40,11 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,scss,css,md}": [
+    "*.{js,jsx,ts,tsx,json}": [
       "npm run lint:fix",
+      "prettier --write"
+    ],
+    "*.{scss,css,md}": [
       "prettier --write"
     ]
   },
@@ -64,6 +68,7 @@
   },
   "devDependencies": {
     "css-loader": "^6.7.1",
+    "eslint-plugin-json": "^3.1.0",
     "husky": "^7.0.4",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2"

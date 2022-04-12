@@ -1,8 +1,16 @@
+import { RefObject } from 'react';
+
 export interface iInput {
   name: string;
   label: string;
   placeholder?: string;
-  error: string;
+  error?: string;
+  handleChange?: (
+    ref: RefObject<HTMLInputElement | HTMLTextAreaElement>,
+    condition: boolean,
+    errorField: string,
+    message: string
+  ) => void;
 }
 
 export interface iInputState {

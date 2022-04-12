@@ -1,15 +1,16 @@
-@use '../../styles/vars.scss';
+@use '../../styles/vars';
 
 .upload {
   grid-area: upload;
   display: flex;
+  flex-direction: column;
   align-items: flex-end;
-  
+  justify-content: space-between;
   &__input {
     display: none;
   }
 
-  label.btn{
+  label.form__btn{
     font-weight: 500;
     font-size: 0.7em;
     padding: 5px;
