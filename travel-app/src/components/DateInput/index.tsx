@@ -18,8 +18,11 @@ export const DateInput: React.FC<DateInputProps> = (props) => (
       id={props.name}
       placeholder={props.placeholder}
       ref={props.innerRef}
-      required
       max={today.toISOString().split('T')[0]}
+      onSubmit={props.handleChange}
+      onInput={props.handleChange}
+      onChange={props.handleChange}
     />
+    <span className="form__error">{props.error}</span>
   </div>
 );

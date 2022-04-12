@@ -277,11 +277,12 @@ export const Select: React.FC<SelectProps> = (props) => {
         id={props.name}
         placeholder={props.placeholder}
         ref={props.innerRef}
-        required
-        onChange={() => props.handleChange}
+        // required
+        onChange={props.handleChange}
       >
         {data}
       </select>
+      <span className="form__error">{props.error}</span>
     </div>
   );
 };

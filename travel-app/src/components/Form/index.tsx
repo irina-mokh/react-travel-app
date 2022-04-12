@@ -1,4 +1,4 @@
-import React, { FormEvent, RefObject } from 'react';
+import React, { RefObject } from 'react';
 import { TextInput } from '../Textinput';
 import { TextArea } from '../TextArea';
 import { DateInput } from '../DateInput';
@@ -9,20 +9,20 @@ import { Upload } from '../Upload';
 import { iErrors, iFormRefs, iVisit } from '../../types';
 
 const ERRORS_INITIAL = {
-  name: '',
-  title: '',
-  description: '',
-  date: '',
-  country: '',
+  name: 'required field',
+  title: 'required field',
+  description: 'required field',
+  date: 'required field',
+  country: 'required field',
   alone: '',
   purpose: '',
-  upload: '',
+  upload: 'required field',
   counter: 0,
 };
 
 const FORM_INITIAL = {
-  name: 'Name',
-  title: 'Title',
+  name: '',
+  title: '',
   date: '',
   description: '',
   country: '',
@@ -37,7 +37,8 @@ interface FormProps {
 
 export interface FormState {
   formData: iVisit;
-  submitDisabled: boolean;
+  isSubmitDisabled: boolean;
+  isInstantValidation: boolean;
   errors: iErrors;
 }
 
@@ -50,7 +51,8 @@ export class Form extends React.Component<FormProps, FormState> {
     super(props);
     this.state = {
       formData: FORM_INITIAL,
-      submitDisabled: true,
+      isSubmitDisabled: true,
+      isInstantValidation: false,
       errors: ERRORS_INITIAL,
     };
 
@@ -69,6 +71,10 @@ export class Form extends React.Component<FormProps, FormState> {
   }
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    this.setState({
+      isInstantValidation: true,
+    });
+
     e.preventDefault();
     const item: iFormRefs = this.formRefs;
     let formData = FORM_INITIAL;
@@ -95,21 +101,24 @@ export class Form extends React.Component<FormProps, FormState> {
       };
     }
 
-    (e.target as HTMLFormElement).reset();
-    if (item.upload.current) {
-      item.upload.current.value = '';
-    }
-
-    const isValid = this.checkValid();
-    console.log(isValid);
-    if (isValid) {
-      this.props.updateData(formData);
+    if (this.state.isInstantValidation) {
+      if (this.isValid()) {
+        this.props.updateData(formData);
+        (e.target as HTMLFormElement).reset();
+        if (item.upload.current) {
+          item.upload.current.value = '';
+        }
+        this.setState({
+          isInstantValidation: false,
+          isSubmitDisabled: true,
+        });
+      }
     }
   }
 
-  handleChange() {
+  handleFormChange() {
     this.setState({
-      submitDisabled: false,
+      isSubmitDisabled: false,
     });
   }
 
@@ -132,9 +141,7 @@ export class Form extends React.Component<FormProps, FormState> {
     }
   };
 
-  checkValid = () => {
-    console.log(this.state.errors);
-    console.log(Object.values(this.state.errors).filter((error) => !!error).length);
+  isValid = () => {
     return !Object.values(this.state.errors).filter((error) => !!error).length;
   };
 
@@ -144,42 +151,39 @@ export class Form extends React.Component<FormProps, FormState> {
     errorField: string,
     message: string
   ) => {
-    console.log('validate');
-    if (ref.current?.value) return;
-    if (condition) {
-      this.setState((state: FormState) => ({
+    if (!ref.current?.value || condition) {
+      this.setState((state) => ({
         errors: { ...state.errors, [errorField]: message },
       }));
     } else {
-      if (this.state.errors.name) {
-        this.setState((state: FormState) => ({
-          errors: { ...state.errors, [errorField]: null },
-        }));
-      }
+      this.setState((state) => ({
+        errors: { ...state.errors, [errorField]: null },
+      }));
     }
   };
 
   render() {
+    const showErr = this.state.isInstantValidation;
     const { errors } = this.state;
     const formRefs = this.formRefs;
     return (
       <form
         className="form"
         onSubmit={this.handleSubmit.bind(this)}
-        onChange={this.handleChange.bind(this)}
+        onChange={this.handleFormChange.bind(this)}
       >
         <TextInput
           name="name"
           label="Your name:"
           placeholder="Enter your name"
           innerRef={formRefs.name}
-          error={errors.name}
+          error={showErr ? errors.name : ''}
           handleChange={() =>
             this.validate(
               formRefs.name,
               Boolean(formRefs.name.current && formRefs.name.current?.value.length < 4),
-              errors.name,
-              'Should be more than 4 chars'
+              'name',
+              'min 4 symbols'
             )
           }
         />
@@ -188,12 +192,12 @@ export class Form extends React.Component<FormProps, FormState> {
           label="Date:"
           placeholder="Date"
           innerRef={formRefs.date}
-          error={errors.date}
+          error={showErr ? errors.date : ''}
           handleChange={() =>
             this.validate(
               formRefs.date,
-              Boolean(formRefs.date.current && formRefs.date.current?.value),
-              errors.date,
+              Boolean(formRefs.date.current && !formRefs.date.current?.value),
+              'date',
               'no value'
             )
           }
@@ -203,13 +207,13 @@ export class Form extends React.Component<FormProps, FormState> {
           label="Title:"
           placeholder="Title"
           innerRef={formRefs.title}
-          error={errors.title}
+          error={showErr ? errors.title : ''}
           handleChange={() =>
             this.validate(
               formRefs.title,
-              Boolean(formRefs.title.current && formRefs.title.current?.value.length > 4),
-              errors.title,
-              'Should be more than 4 chars'
+              Boolean(formRefs.title.current && formRefs.title.current?.value.length < 4),
+              'title',
+              'min 4 symbols'
             )
           }
         />
@@ -218,12 +222,12 @@ export class Form extends React.Component<FormProps, FormState> {
           label="Country:"
           placeholder="Country"
           innerRef={formRefs.country}
-          error={errors.country}
+          error={showErr ? errors.country : ''}
           handleChange={() =>
             this.validate(
               formRefs.country,
-              Boolean(formRefs.country.current && formRefs.country.current?.value),
-              errors.country,
+              Boolean(formRefs.country.current && !formRefs.country.current?.value),
+              'country',
               'no value'
             )
           }
@@ -236,12 +240,12 @@ export class Form extends React.Component<FormProps, FormState> {
           innerRef={formRefs.upload}
           handleFileChosen={this.handleFileChosen}
           btnText={formRefs.upload.current?.value}
-          error={errors.upload}
+          error={showErr ? errors.upload : ''}
           handleChange={() =>
             this.validate(
               formRefs.upload,
-              Boolean(formRefs.upload.current && formRefs.upload.current?.value),
-              errors.upload,
+              Boolean(formRefs.upload.current && !formRefs.upload.current?.value),
+              'upload',
               'no file loaded'
             )
           }
@@ -251,14 +255,14 @@ export class Form extends React.Component<FormProps, FormState> {
           label="Impression:"
           placeholder="Give a short description for your trip"
           innerRef={formRefs.description}
-          error={errors.description}
+          error={showErr ? errors.description : ''}
           handleChange={() =>
             this.validate(
               formRefs.description,
               Boolean(
                 formRefs.description.current && formRefs.description.current?.value.length < 8
               ),
-              errors.description,
+              'description',
               'min 8 symbols'
             )
           }
@@ -267,7 +271,7 @@ export class Form extends React.Component<FormProps, FormState> {
           className="form__btn form__submit"
           type="submit"
           value="post"
-          disabled={this.state.submitDisabled}
+          disabled={this.state.isSubmitDisabled}
         >
           Post
         </button>

@@ -2,7 +2,7 @@ import { Form } from '../components/Form';
 import React from 'react';
 import { VisitCardsList } from '../components/VisitCardsList';
 import { testVisit } from '../components/VisitCardsList/testVisit';
-import { iVisit, iFormRefs, iErrors } from '../types';
+import { iVisit } from '../types';
 
 interface VisitsProps {
   value?: string;
@@ -21,8 +21,6 @@ export class Visits extends React.Component<VisitsProps, VisitsState> {
   }
 
   render() {
-    console.log(this.state);
-
     return (
       <>
         <h2>Post your visit of a country!</h2>

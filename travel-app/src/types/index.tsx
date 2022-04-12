@@ -5,12 +5,7 @@ export interface iInput {
   label: string;
   placeholder?: string;
   error?: string;
-  handleChange?: (
-    ref: RefObject<HTMLInputElement | HTMLTextAreaElement>,
-    condition: boolean,
-    errorField: string,
-    message: string
-  ) => void;
+  handleChange?: () => void;
 }
 
 export interface iInputState {

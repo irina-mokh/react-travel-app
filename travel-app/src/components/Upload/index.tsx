@@ -1,5 +1,4 @@
-import React, { MutableRefObject } from 'react';
-import { InputFiles } from 'typescript';
+import React from 'react';
 import { iInput } from '../../types';
 
 interface UploadProps extends iInput {
@@ -22,10 +21,7 @@ export const Upload: React.FC<UploadProps> = (props) => (
       id={props.name}
       ref={props.innerRef}
       onInput={props.handleFileChosen}
-      onChange={() => {
-        console.log(props.handleChange);
-        return props.handleChange;
-      }}
+      onChange={props.handleChange}
     />
   </div>
 );

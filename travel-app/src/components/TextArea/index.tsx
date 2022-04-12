@@ -15,8 +15,7 @@ export const TextArea: React.FC<TextAreaProps> = (props) => (
       id={props.name}
       placeholder={props.placeholder}
       ref={props.innerRef}
-      required
-      onChange={() => props.handleChange}
+      onChange={props.handleChange}
     />
     <span className="form__error">{props.error}</span>
   </div>
