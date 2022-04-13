@@ -6,7 +6,7 @@ interface SelectProps extends iInput {
 }
 
 const countries = [
-  'Choose your country',
+  '',
   'Afghanistan',
   'Albania',
   'Algeria',

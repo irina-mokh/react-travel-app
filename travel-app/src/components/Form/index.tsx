@@ -101,19 +101,21 @@ export class Form extends React.Component<FormProps, FormState> {
       };
     }
 
-    if (this.state.isInstantValidation) {
-      if (this.isValid()) {
-        this.props.updateData(formData);
-        (e.target as HTMLFormElement).reset();
-        if (item.upload.current) {
-          item.upload.current.value = '';
-        }
-        this.setState({
-          isInstantValidation: false,
-          isSubmitDisabled: true,
-        });
+    if (this.isValid()) {
+      this.props.updateData(formData);
+      e.currentTarget.reset();
+      if (item.upload.current) {
+        item.upload.current.value = '';
       }
     }
+  }
+
+  resetForm() {
+    this.setState({
+      isInstantValidation: false,
+      isSubmitDisabled: true,
+      errors: ERRORS_INITIAL,
+    });
   }
 
   handleFormChange() {
@@ -171,6 +173,7 @@ export class Form extends React.Component<FormProps, FormState> {
         className="form"
         onSubmit={this.handleSubmit.bind(this)}
         onChange={this.handleFormChange.bind(this)}
+        onReset={this.resetForm.bind(this)}
       >
         <TextInput
           name="name"
