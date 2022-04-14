@@ -2,7 +2,8 @@ export interface iInput {
   name: string;
   label: string;
   placeholder?: string;
-  error: string;
+  error?: string;
+  handleChange?: () => void;
 }
 
 export interface iInputState {

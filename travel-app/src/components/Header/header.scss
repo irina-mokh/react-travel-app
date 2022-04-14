@@ -1,4 +1,4 @@
-@use '../../styles/vars.scss';
+@use '../../styles/vars';
 
 .header {
   background-color: vars.$jet;
@@ -6,10 +6,18 @@
   align-items: center;
   justify-content: space-around;
   color: white;
+
   &__logo {
     max-height: 90%;
   }
+
   &__nav {
     display: flex;
+  }
+
+  &__link {
+    color: vars.$green;
+    text-decoration: none;
+    margin: 0 0 0 1em;
   }
 }

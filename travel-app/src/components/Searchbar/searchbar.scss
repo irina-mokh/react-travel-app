@@ -1,9 +1,9 @@
-@use '../../styles/vars.scss';
+@use '../../styles/vars';
 
 .search-bar {
   position: relative;
 
-  .search{
+  .search {
     font-size: 1.3em;
     background-color: vars.$jet;
     padding: 7px 10px 7px 20px;
@@ -37,7 +37,7 @@
     margin-top: -12px;
     border: none;
     background-color: transparent;
-     
+
     filter: vars.$filter-snow;
     z-index: 2;
     cursor: pointer;

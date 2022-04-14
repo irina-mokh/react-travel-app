@@ -1,5 +1,4 @@
-@use '../../styles/vars.scss';
-@use '../../styles/global.scss';
+@use '../../styles/vars';
 
 .app {
   height: 100vh;
@@ -7,29 +6,4 @@
   grid-template-rows: 11vh auto 7vh;
   margin: 0 auto;
   text-align: center;
-  
-  &__link {
-    color: vars.$green;
-    text-decoration: none;
-    margin: 0 0 0 1em;
-  }
-}
-
-.github {
-  display: flex;
-  text-decoration: none;
-  transition: all 0.3s;
-  align-items: center;
-  &__icon {
-    display: inline-block;
-    content: '';
-    filter: vars.$filter-jet;
-  }
-
-  &__text {
-    margin: 0 0 0 10px;
-    font-family: inherit;
-    font-size: 1.2em;
-    color: vars.$jet;
-  }
 }

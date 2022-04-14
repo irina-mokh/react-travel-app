@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from '../Card/Card';
+import { Card } from '../CountryCard';
 import { iCountryInfo } from '../../types';
 import { Loading } from '../Loading/Loading';
 
@@ -13,7 +13,7 @@ interface CardsState {
   isLoaded: boolean;
 }
 
-export class Cards extends React.Component<CardsProps, CardsState> {
+export class CountryCardsList extends React.Component<CardsProps, CardsState> {
   constructor(props: CardsProps) {
     super(props);
     this.state = {

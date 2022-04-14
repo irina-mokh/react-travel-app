@@ -6,6 +6,7 @@ interface SelectProps extends iInput {
 }
 
 const countries = [
+  '',
   'Afghanistan',
   'Albania',
   'Algeria',
@@ -257,34 +258,31 @@ const countries = [
   'Åland Islands',
 ];
 
-export class Select extends React.Component<SelectProps> {
-  constructor(props: SelectProps) {
-    super(props);
-  }
-  render() {
-    const data = countries.map((item, index) => {
-      return (
-        <option key={`${index}`} value={item}>
-          {item}
-        </option>
-      );
-    });
-
+export const Select: React.FC<SelectProps> = (props) => {
+  const data = countries.map((item, index) => {
     return (
-      <fieldset className={`form__block ${this.props.name}`}>
-        <label className="label" htmlFor={this.props.name}>
-          {this.props.label}
-        </label>
-        <select
-          className={`field ${this.props.name}__input`}
-          id={this.props.name}
-          placeholder={this.props.placeholder}
-          ref={this.props.innerRef}
-          required
-        >
-          {data}
-        </select>
-      </fieldset>
+      <option key={index} value={item}>
+        {item || 'Choose your country'}
+      </option>
     );
-  }
-}
+  });
+
+  return (
+    <div className={`form__element country`}>
+      <label className="label" htmlFor={props.name}>
+        {props.label}
+      </label>
+      <select
+        className={`form__field ${props.name}__input`}
+        id={props.name}
+        placeholder={props.placeholder}
+        ref={props.innerRef}
+        // required
+        onChange={props.handleChange}
+      >
+        {data}
+      </select>
+      <span className="form__error">{props.error}</span>
+    </div>
+  );
+};

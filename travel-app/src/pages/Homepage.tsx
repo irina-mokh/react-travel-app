@@ -1,6 +1,6 @@
 import React from 'react';
-import { SearchBar } from '../components/Searchbar/SearchBar';
-import { Cards } from '../components/Cards/Cards';
+import { SearchBar } from '../components/Searchbar';
+import { CountryCardsList } from '../components/CountryCardsList';
 
 interface HomeProps {
   value?: string;
@@ -37,7 +37,7 @@ export class Home extends React.Component<HomeProps, HomeState> {
       <>
         <h2>Welcome to the homepage!</h2>
         <SearchBar innerRef={this.state.searchInput} handleSubmit={this.handleSearch} />
-        <Cards query={this.state.searchQuery} />
+        <CountryCardsList query={this.state.searchQuery} />
       </>
     );
   }
