@@ -1,85 +1,54 @@
-import React from 'react';
-import { Card } from '../CountryCard';
+import React, { useEffect, useState } from 'react';
+import { CountryCard } from '../CountryCard';
 import { iCountryInfo } from '../../types';
 import { Loading } from '../Loading/Loading';
 
-interface CardsProps {
+interface CountryCardsListProps {
   query: string;
 }
 
-interface CardsState {
-  isData: boolean;
-  data: iCountryInfo[];
-  isLoaded: boolean;
-}
+export const CountryCardsList = (props: CountryCardsListProps) => {
+  const [data, setData] = useState<iCountryInfo[] | []>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isData, setIsData] = useState(false);
 
-export class CountryCardsList extends React.Component<CardsProps, CardsState> {
-  constructor(props: CardsProps) {
-    super(props);
-    this.state = {
-      data: [],
-      isLoaded: false,
-      isData: false,
-    };
-  }
-
-  async componentDidMount() {
-    this.fetchData();
-  }
-
-  async fetchData() {
-    this.setState({
-      isLoaded: false,
-      isData: false,
-    });
-    const query = this.props.query;
+  useEffect(() => {
+    setIsLoaded(false);
+    setIsData(false);
+    const query = props.query;
     let url = `https://restcountries.com/v3.1/name/${query}`;
     if (query == '') {
       url = `https://restcountries.com/v3.1/all`;
     }
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      this.setState({
-        data: data,
-        isLoaded: true,
-        isData: Boolean(data.length),
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setIsLoaded(true);
+        setIsData(!!data.length);
+        setData(data);
       });
-    } catch (err) {
-      console.log(err);
-    }
+  }, [props.query]);
+
+  let content = <div>No results</div>;
+
+  if (!isLoaded) {
+    content = <Loading />;
+  } else if (isData) {
+    const cards = data.map((item) => {
+      const data = {
+        id: Number(item.ccn3),
+        title: item.name.common,
+        capital: Array.isArray(item.capital) ? item.capital[0] : item.capital,
+        currency: item.currencies
+          ? item.currencies[Object.keys(item.currencies)[0]]
+          : { name: '', symbol: '' },
+        area: item.area,
+        population: item.population,
+        image: item.flags.svg,
+      };
+      return <CountryCard key={data.id} value={data} />;
+    });
+    content = <ul className="cards">{cards}</ul>;
   }
-
-  async componentDidUpdate(prevProps: CardsProps) {
-    if (prevProps.query !== this.props.query) {
-      this.fetchData();
-    }
-  }
-
-  render() {
-    const { isLoaded, isData, data } = this.state;
-    let content = <div>No results</div>;
-
-    if (!isLoaded) {
-      content = <Loading />;
-    } else if (isData) {
-      const cards = data.map((item) => {
-        const data = {
-          id: Number(item.ccn3),
-          title: item.name.common,
-          capital: Array.isArray(item.capital) ? item.capital[0] : item.capital,
-          currency: item.currencies
-            ? item.currencies[Object.keys(item.currencies)[0]]
-            : { name: '', symbol: '' },
-          area: item.area,
-          population: item.population,
-          image: item.flags.svg,
-        };
-        return <Card key={data.id} value={data} />;
-      });
-      content = <ul className="cards">{cards}</ul>;
-    }
-
-    return content;
-  }
-}
+  return content;
+};
