@@ -1,44 +1,15 @@
-import React from 'react';
+import { useState } from 'react';
 import { SearchBar } from '../components/Searchbar';
 import { CountryCardsList } from '../components/CountryCardsList';
 
-interface HomeProps {
-  value?: string;
-}
+export const Home = () => {
+  const [query, setQuery] = useState(localStorage.getItem('search') || '');
 
-interface HomeState {
-  searchQuery: string;
-  searchInput: React.RefObject<HTMLInputElement>;
-}
-
-export class Home extends React.Component<HomeProps, HomeState> {
-  constructor(props: HomeProps) {
-    super(props);
-    this.state = {
-      searchInput: React.createRef<HTMLInputElement>(),
-      searchQuery: localStorage.getItem('search') || '',
-    };
-    this.handleSearch = this.handleSearch.bind(this);
-  }
-
-  async handleSearch(e: React.KeyboardEvent<HTMLInputElement>) {
-    e.preventDefault();
-    if (this.state.searchInput.current) {
-      const query: string = this.state.searchInput.current.value;
-      localStorage.setItem('search', query);
-      this.setState({
-        searchQuery: query,
-      });
-    }
-  }
-
-  render() {
-    return (
-      <>
-        <h2>Welcome to the homepage!</h2>
-        <SearchBar innerRef={this.state.searchInput} handleSubmit={this.handleSearch} />
-        <CountryCardsList query={this.state.searchQuery} />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <h2>Welcome to the homepage!</h2>
+      <SearchBar value={query} handleSubmit={setQuery} />
+      <CountryCardsList query={query} />
+    </>
+  );
+};
