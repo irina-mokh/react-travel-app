@@ -1,4 +1,5 @@
-import React, { RefObject } from 'react';
+import { useState, useEffect } from 'react';
+import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { TextInput } from '../Textinput';
 import { TextArea } from '../TextArea';
 import { DateInput } from '../DateInput';
@@ -6,30 +7,7 @@ import { Select } from '../Select';
 import { Checkbox } from '../Checkbox';
 import { Switcher } from '../Switcher';
 import { Upload } from '../Upload';
-import { iErrors, iFormRefs, iVisit } from '../../types';
-
-const ERRORS_INITIAL = {
-  name: 'required field',
-  title: 'required field',
-  description: 'required field',
-  date: 'required field',
-  country: 'required field',
-  alone: '',
-  purpose: '',
-  upload: 'required field',
-  counter: 0,
-};
-
-const FORM_INITIAL = {
-  name: '',
-  title: '',
-  date: '',
-  description: '',
-  country: '',
-  purpose: '',
-  alone: false,
-  upload: '',
-};
+import { iErrors, iVisit } from '../../types';
 
 interface FormProps {
   updateData: (e: iVisit) => void;
@@ -42,243 +20,91 @@ export interface FormState {
   errors: iErrors;
 }
 
-export class Form extends React.Component<FormProps, FormState> {
-  fileReader: FileReader | null;
-  fileSrc: string;
-  formRefs: iFormRefs;
+const fileReader = new FileReader();
+let fileSrc = '';
 
-  constructor(props: FormProps) {
-    super(props);
-    this.state = {
-      formData: FORM_INITIAL,
-      isSubmitDisabled: true,
-      isInstantValidation: false,
-      errors: ERRORS_INITIAL,
-    };
+export const Form = (props: FormProps) => {
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [uploadBtnText, setUploadBtnText] = useState<string>('');
+  const methods = useForm<iVisit>();
 
-    this.fileReader = null;
-    this.fileSrc = '';
-    this.formRefs = {
-      name: React.createRef<HTMLInputElement>(),
-      title: React.createRef<HTMLInputElement>(),
-      description: React.createRef<HTMLTextAreaElement>(),
-      date: React.createRef<HTMLInputElement>(),
-      country: React.createRef<HTMLSelectElement>(),
-      alone: React.createRef<HTMLInputElement>(),
-      purpose: React.createRef<HTMLInputElement>(),
-      upload: React.createRef<HTMLInputElement>(),
-    };
-  }
+  const {
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitSuccessful },
+  } = methods;
 
-  handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    this.setState({
-      isInstantValidation: true,
-    });
+  useEffect(() => {
+    reset();
+    setUploadBtnText('');
+    setIsSubmitDisabled(true);
+  }, [isSubmitSuccessful, reset]);
 
-    e.preventDefault();
-    const item: iFormRefs = this.formRefs;
-    let formData = FORM_INITIAL;
+  const onSubmit: SubmitHandler<iVisit> = (data) => {
+    const formatData = data;
+    formatData.upload = fileSrc;
+    formatData.date = new Date(data.date).toLocaleDateString();
+    formatData.purpose = data.purpose ? 'Travel' : 'Business';
+    props.updateData(formatData);
+  };
 
-    if (
-      item.name.current &&
-      item.title.current &&
-      item.date.current &&
-      item.country.current &&
-      item.alone.current &&
-      item.description.current &&
-      item.purpose.current &&
-      item.upload.current
-    ) {
-      formData = {
-        name: item.name.current.value,
-        title: item.title.current.value,
-        description: item.description.current.value,
-        date: item.date.current.value,
-        country: item.country.current.value,
-        alone: item.alone.current.checked,
-        purpose: item.purpose.current.checked ? 'Travel' : 'Business',
-        upload: this.fileSrc,
+  const handleFileChosen = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.currentTarget.value;
+    const files = e.currentTarget.files;
+    setUploadBtnText(name.replace(/^.*[\\\/]/, ''));
+    if (files) {
+      fileReader.onloadend = () => {
+        fileSrc = String(fileReader.result);
       };
-    }
-
-    if (this.isValid()) {
-      this.props.updateData(formData);
-      e.currentTarget.reset();
-      if (item.upload.current) {
-        item.upload.current.value = '';
-      }
-    }
-  }
-
-  resetForm() {
-    this.setState({
-      isInstantValidation: false,
-      isSubmitDisabled: true,
-      errors: ERRORS_INITIAL,
-    });
-  }
-
-  handleFormChange() {
-    this.setState({
-      isSubmitDisabled: false,
-    });
-  }
-
-  handleFileReader = () => {
-    if (!this.fileReader) return;
-    const content = this.fileReader.result;
-    this.fileSrc = String(content);
-  };
-
-  handleFileChosen = () => {
-    if (
-      this.formRefs.upload &&
-      this.formRefs.upload.current &&
-      this.formRefs.upload.current.files
-    ) {
-      const file = this.formRefs.upload.current.files[0];
-      this.fileReader = new FileReader();
-      this.fileReader.onloadend = this.handleFileReader;
-      this.fileReader.readAsDataURL(file);
+      fileReader.readAsDataURL(files[0]);
     }
   };
 
-  isValid = () => {
-    return !Object.values(this.state.errors).filter((error) => !!error).length;
+  const handleFormChange = () => {
+    setIsSubmitDisabled(false);
   };
 
-  validate = (
-    ref: RefObject<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-    condition: boolean,
-    errorField: string,
-    message: string
-  ) => {
-    if (!ref.current?.value || condition) {
-      this.setState((state) => ({
-        errors: { ...state.errors, [errorField]: message },
-      }));
-    } else {
-      this.setState((state) => ({
-        errors: { ...state.errors, [errorField]: null },
-      }));
-    }
-  };
-
-  render() {
-    const showErr = this.state.isInstantValidation;
-    const { errors } = this.state;
-    const formRefs = this.formRefs;
-    return (
-      <form
-        className="form"
-        onSubmit={this.handleSubmit.bind(this)}
-        onChange={this.handleFormChange.bind(this)}
-        onReset={this.resetForm.bind(this)}
-      >
+  return (
+    <FormProvider {...methods}>
+      <form className="form" onSubmit={handleSubmit(onSubmit)} onChange={handleFormChange}>
         <TextInput
           name="name"
           label="Your name:"
           placeholder="Enter your name"
-          innerRef={formRefs.name}
-          error={showErr ? errors.name : ''}
-          handleChange={() =>
-            this.validate(
-              formRefs.name,
-              Boolean(formRefs.name.current && formRefs.name.current?.value.length < 4),
-              'name',
-              'min 4 symbols'
-            )
-          }
+          error={errors.name?.message}
         />
-        <DateInput
-          name="date"
-          label="Date:"
-          placeholder="Date"
-          innerRef={formRefs.date}
-          error={showErr ? errors.date : ''}
-          handleChange={() =>
-            this.validate(
-              formRefs.date,
-              Boolean(formRefs.date.current && !formRefs.date.current?.value),
-              'date',
-              'no value'
-            )
-          }
-        />
-        <TextInput
-          name="title"
-          label="Title:"
-          placeholder="Title"
-          innerRef={formRefs.title}
-          error={showErr ? errors.title : ''}
-          handleChange={() =>
-            this.validate(
-              formRefs.title,
-              Boolean(formRefs.title.current && formRefs.title.current?.value.length < 4),
-              'title',
-              'min 4 symbols'
-            )
-          }
-        />
+        <DateInput name="date" label="Date:" placeholder="Date" error={errors.date?.message} />
+        <TextInput name="title" label="Title:" placeholder="Title" error={errors.title?.message} />
         <Select
           name="country"
           label="Country:"
           placeholder="Country"
-          innerRef={formRefs.country}
-          error={showErr ? errors.country : ''}
-          handleChange={() =>
-            this.validate(
-              formRefs.country,
-              Boolean(formRefs.country.current && !formRefs.country.current?.value),
-              'country',
-              'no value'
-            )
-          }
+          error={errors.country?.message}
         />
-        <Checkbox name="alone" label="Alone" innerRef={formRefs.alone} />
-        <Switcher name="purpose" label="Purpose:" innerRef={formRefs.purpose} />
+        <Checkbox name="alone" label="Alone" />
+        <Switcher name="purpose" label="Purpose:" />
         <Upload
           name="upload"
           label="Upload a photo:"
-          innerRef={formRefs.upload}
-          handleFileChosen={this.handleFileChosen}
-          btnText={formRefs.upload.current?.value}
-          error={showErr ? errors.upload : ''}
-          handleChange={() =>
-            this.validate(
-              formRefs.upload,
-              Boolean(formRefs.upload.current && !formRefs.upload.current?.value),
-              'upload',
-              'no file loaded'
-            )
-          }
+          handleFileChosen={handleFileChosen}
+          error={errors.upload?.message}
+          btnText={uploadBtnText}
         />
         <TextArea
           name="description"
           label="Impression:"
           placeholder="Give a short description for your trip"
-          innerRef={formRefs.description}
-          error={showErr ? errors.description : ''}
-          handleChange={() =>
-            this.validate(
-              formRefs.description,
-              Boolean(
-                formRefs.description.current && formRefs.description.current?.value.length < 8
-              ),
-              'description',
-              'min 8 symbols'
-            )
-          }
+          error={errors.description?.message}
         />
         <button
           className="form__btn form__submit"
           type="submit"
           value="post"
-          disabled={this.state.isSubmitDisabled}
+          disabled={isSubmitDisabled}
         >
           Post
         </button>
       </form>
-    );
-  }
-}
+    </FormProvider>
+  );
+};

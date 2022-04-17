@@ -1,9 +1,6 @@
 import React from 'react';
 import { iInput } from '../../types';
-
-interface SelectProps extends iInput {
-  innerRef: React.ForwardedRef<HTMLSelectElement>;
-}
+import { useFormContext } from 'react-hook-form';
 
 const countries = [
   '',
@@ -258,7 +255,9 @@ const countries = [
   'Åland Islands',
 ];
 
-export const Select: React.FC<SelectProps> = (props) => {
+export const Select: React.FC<iInput> = (props) => {
+  const { register } = useFormContext();
+
   const data = countries.map((item, index) => {
     return (
       <option key={index} value={item}>
@@ -273,12 +272,10 @@ export const Select: React.FC<SelectProps> = (props) => {
         {props.label}
       </label>
       <select
+        {...register(props.name, { required: 'required field' })}
         className={`form__field ${props.name}__input`}
         id={props.name}
         placeholder={props.placeholder}
-        ref={props.innerRef}
-        // required
-        onChange={props.handleChange}
       >
         {data}
       </select>

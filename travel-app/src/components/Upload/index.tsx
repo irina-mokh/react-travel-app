@@ -1,27 +1,33 @@
 import React from 'react';
 import { iInput } from '../../types';
+import { useFormContext } from 'react-hook-form';
 
 interface UploadProps extends iInput {
-  innerRef: React.ForwardedRef<HTMLInputElement>;
-  handleFileChosen: () => void;
-  btnText: string | undefined;
+  handleFileChosen: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  btnText: string | null;
 }
 
-export const Upload: React.FC<UploadProps> = (props) => (
-  <div className={`form__element ${props.name}`}>
-    <span className="form__error">{props.error}</span>
-    <label className="form__btn" htmlFor={props.name}>
-      {props.btnText ? props.btnText.replace(/^.*[\\\/]/, '') : 'Upload File'}
-    </label>
-    <input
-      type="file"
-      name="photo"
-      accept="image/png, image/jpeg"
-      className={`${props.name}__input`}
-      id={props.name}
-      ref={props.innerRef}
-      onInput={props.handleFileChosen}
-      onChange={props.handleChange}
-    />
-  </div>
-);
+export const Upload: React.FC<UploadProps> = (props) => {
+  const { register, trigger } = useFormContext();
+
+  return (
+    <div className={`form__element ${props.name}`}>
+      <span className="form__error">{props.error}</span>
+      <label className="form__btn" htmlFor={props.name}>
+        {props.btnText || 'Upload File'}
+      </label>
+      <input
+        {...register(props.name, { required: 'required field' })}
+        type="file"
+        name="upload"
+        accept="image/png, image/jpeg"
+        className={`${props.name}__input`}
+        id={props.name}
+        onChange={(e) => {
+          props.handleFileChosen(e);
+          trigger('upload');
+        }}
+      />
+    </div>
+  );
+};

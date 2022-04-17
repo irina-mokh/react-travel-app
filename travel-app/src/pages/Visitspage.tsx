@@ -1,38 +1,19 @@
 import { Form } from '../components/Form';
-import React from 'react';
+import { useState } from 'react';
 import { VisitCardsList } from '../components/VisitCardsList';
 import { testVisit } from '../components/VisitCardsList/testVisit';
 import { iVisit } from '../types';
 
-interface VisitsProps {
-  value?: string;
-}
+export const Visits = () => {
+  const [visits, setVisits] = useState([testVisit]);
 
-interface VisitsState {
-  visits: iVisit[] | [];
-}
-
-export class Visits extends React.Component<VisitsProps, VisitsState> {
-  constructor(props: VisitsProps) {
-    super(props);
-    this.state = {
-      visits: [testVisit],
-    };
-  }
-
-  render() {
-    return (
-      <>
-        <h2>Post your visit of a country!</h2>
-        <Form
-          updateData={(formData: iVisit) => {
-            this.setState((state) => ({
-              visits: [...state.visits, formData],
-            }));
-          }}
-        />
-        <VisitCardsList data={this.state.visits} />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <h2>Post your visit of a country!</h2>
+      <Form
+        updateData={(formData: iVisit) => setVisits((prevVisits) => [...prevVisits, formData])}
+      />
+      <VisitCardsList data={visits} />
+    </>
+  );
+};
