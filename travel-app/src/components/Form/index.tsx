@@ -66,7 +66,12 @@ export const Form = (props: FormProps) => {
 
   return (
     <FormProvider {...methods}>
-      <form className="form" onSubmit={handleSubmit(onSubmit)} onChange={handleFormChange}>
+      <form
+        className="form"
+        onSubmit={handleSubmit(onSubmit)}
+        onChange={handleFormChange}
+        data-testid="visit-form"
+      >
         <TextInput
           name="name"
           label="Your name:"

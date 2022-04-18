@@ -27,7 +27,7 @@ export const CountryCard = (props: CountryCardProps) => {
   const item = props.value;
   return (
     <>
-      <li className="card" data-testid="custom-card" onClick={toggleModal}>
+      <li className="card" data-testid="small-country-card" onClick={toggleModal}>
         <h3 className="card__title">{item.title}</h3>
         <p className="card__capital">{item.capital}</p>
         <div className="card__flag">

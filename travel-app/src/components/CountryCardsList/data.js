@@ -10,7 +10,7 @@ export const data = [
     id: 0,
     title: 'Japan',
     capital: 'Tokyo',
-    currencies: {
+    currency: {
       name: 'Japanese yen',
       symbol: '¥',
     },
@@ -22,7 +22,7 @@ export const data = [
     id: 2,
     title: 'Australia',
     capital: 'Canberra',
-    currencies: {
+    currency: {
       name: 'Australian dollar',
       symbol: '$',
     },
@@ -34,7 +34,7 @@ export const data = [
     id: 3,
     title: 'Brazil',
     capital: 'Brasilia',
-    currencies: {
+    currency: {
       name: 'Brazilian real',
       symbol: 'R$',
     },
@@ -46,7 +46,7 @@ export const data = [
     id: 4,
     title: 'Cuba',
     capital: 'Havana',
-    currencies: {
+    currency: {
       name: 'Cuban peso',
       symbol: '$MN',
     },
@@ -58,7 +58,7 @@ export const data = [
     id: 5,
     title: 'Denmark',
     capital: 'Copenhagen',
-    currencies: {
+    currency: {
       name: 'Danish krone',
       symbol: 'kr',
     },
@@ -70,7 +70,7 @@ export const data = [
     id: 6,
     title: 'England',
     capital: 'London',
-    currencies: {
+    currency: {
       name: 'Pound sterling',
       symbol: '£',
     },

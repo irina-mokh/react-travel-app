@@ -1,13 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { AppRouter } from '../AppRouter';
-import { MemoryRouter } from 'react-router-dom';
+import { CountryCard } from '../CountryCard';
+import { data } from '../CountryCardsList/data';
 
-describe('Card', () => {
-  render(
-    <MemoryRouter>
-      <AppRouter />
-    </MemoryRouter>
-  );
+describe('Country Card', () => {
+  render(<CountryCard value={data[0]} />);
   it('check for Japan card', () => {
     const elem = screen.getByText('Japan');
     expect(elem).toBeInTheDocument();
