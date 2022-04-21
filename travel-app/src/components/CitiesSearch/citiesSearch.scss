@@ -1,0 +1,41 @@
+@use '../../styles/vars';
+
+.cities {
+  min-width: 70%;
+  &__sort {
+    color: vars.$green;
+    width: 150px;
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 1em 0 0 0;
+  }
+
+  &__pagination {
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    min-width: 120px;
+  }
+
+  &__pages {
+    color: vars.$green;
+    width: 80px;
+  }
+
+  .arrow {
+    display: block;
+    box-sizing: border-box;
+    padding: 0;
+    width: 2em;
+    height: 2em;
+    background-color: transparent;
+    border: 2px solid vars.$green;
+    border-radius: 50%;
+    color: vars.$green;
+  }
+}

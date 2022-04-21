@@ -1,17 +1,14 @@
 @use '../../styles/vars.scss';
 
 .card {
-  max-width: 300px;
-  list-style: none;
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  grid-template-areas:
-    'title flag'
-    'capital flag';
-  background-color: #ececec;
-  border: 2px solid vars.$green;
-  border-radius: 0.8em;
-  padding: 7px;
+  &_country {
+    max-width: 300px;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    grid-template-areas:
+      'title flag'
+      'capital flag';
+  }
 
   & > * {
     margin: 2px;

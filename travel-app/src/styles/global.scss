@@ -31,3 +31,15 @@ main {
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
+
+.heading {
+  margin: 0.5em 0;
+}
+
+.card {
+  list-style: none;
+  background-color: #ececec;
+  border: 2px solid vars.$green;
+  border-radius: 0.8em;
+  padding: 7px;
+}

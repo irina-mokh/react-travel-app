@@ -16,6 +16,9 @@ export function Header() {
         <Link className="header__link" to="/visits">
           Visits
         </Link>
+        <Link className="header__link" to="/cities">
+          Cities
+        </Link>
       </nav>
     </header>
   );

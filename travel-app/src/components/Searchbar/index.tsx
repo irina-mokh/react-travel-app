@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ReactComponent as Close } from '../../assets/icons/close.svg';
 
 interface SearchProps {
+  name: string;
   value?: string;
   handleSubmit: (input: string) => void;
 }
@@ -10,8 +11,8 @@ export const SearchBar = (props: SearchProps) => {
   const [input, setInput] = useState(props.value);
 
   useEffect(() => {
-    localStorage.setItem('search', String(input));
-  }, [input]);
+    localStorage.setItem(`${props.name}-search`, String(input));
+  }, [input, props.name]);
 
   return (
     <form className="search-bar">
@@ -32,7 +33,7 @@ export const SearchBar = (props: SearchProps) => {
         }}
       />
       <button className="search-bar__clear" onClick={() => setInput('')}>
-        <Close className="search-bar__clear__icon" />
+        <Close className="search-bar__clear-icon" />
       </button>
     </form>
   );

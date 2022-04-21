@@ -66,3 +66,49 @@ export interface iCountryInfo {
     png: string;
   };
 }
+
+export interface iCitySearch {
+  query: string;
+  sort: string;
+  page: number;
+}
+
+export interface iState {
+  data: iCity[] | [];
+  query: string;
+  sort: string;
+  page: number;
+  pages: string[];
+  isLoaded: boolean;
+}
+
+export interface iCity {
+  city: string;
+  country: string;
+  countryCode: string;
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  population: number;
+  region: string;
+  regionCode: string;
+  type: string;
+  wikiDataId: string;
+}
+
+export type iAction = {
+  type: string;
+  payload?: iPayload;
+};
+
+export interface iResponse {
+  data: iCity[];
+  links: [];
+  metadata: {
+    currentOffset: number;
+    totalCount: number;
+  };
+}
+
+export type iPayload = iResponse | string;
