@@ -78,6 +78,7 @@ export interface iState {
   query: string;
   sort: string;
   page: number;
+  perPage: string;
   pages: string[];
   isLoaded: boolean;
 }

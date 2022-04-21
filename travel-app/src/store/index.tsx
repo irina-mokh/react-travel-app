@@ -7,6 +7,7 @@ export const initialState: iState = {
   query: localStorage.getItem('city-search') || 'ta',
   sort: 'name',
   page: 1,
+  perPage: '10',
   pages: ['1'],
   isLoaded: false,
 };

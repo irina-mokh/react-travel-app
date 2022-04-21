@@ -1,5 +1,4 @@
 import { iState, iCity, iPayload, iResponse } from '../types';
-import { PER_PAGE } from '../components/CitiesSearch';
 export const citiesReducer = (state: iState, action: { type: string; payload?: iPayload }) => {
   switch (action.type) {
     case 'get response':
@@ -10,7 +9,7 @@ export const citiesReducer = (state: iState, action: { type: string; payload?: i
       if (action.payload) {
         const response = action.payload as iResponse;
         responseData = response.data;
-        const pagesCount = Math.ceil(response.metadata.totalCount / PER_PAGE);
+        const pagesCount = Math.ceil(response.metadata.totalCount / Number(state.perPage));
         for (let i = 1; i < pagesCount; i += 1) {
           pagesArray.push(String(i));
         }
@@ -26,6 +25,11 @@ export const citiesReducer = (state: iState, action: { type: string; payload?: i
         ...state,
         query: action.payload as string,
         page: 1,
+      };
+    case 'change per page':
+      return {
+        ...state,
+        perPage: action.payload as string,
       };
     case 'change sort type':
       return {
