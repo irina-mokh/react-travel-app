@@ -1,0 +1,32 @@
+@use '../styles/vars';
+
+.city-page {
+  text-align: left;
+  max-width: 1220px;
+  min-width: 60%;
+  margin: 1em;
+  padding: 1em;
+  background-color: vars.$light-gray;
+  &__content {
+    display: flex;
+    justify-content: space-between;
+  }
+  tr {
+    td:first-child {
+      font-style: italic;
+      min-width: 150px;
+    }
+  }
+  &__title {
+    font-size: 2em;
+    margin: 10px 0;
+    padding: 5px;
+    color: vars.$green;
+    border: 2px solid vars.$green;
+    border-width: 0 0 2px 0;
+  }
+  &__country {
+    font-weight: 600;
+    font-size: 1.5em;
+  }
+}

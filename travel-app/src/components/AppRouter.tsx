@@ -6,6 +6,7 @@ import { NotFound } from '../pages/Notfound';
 import { Layout } from './Layout';
 import { Visits } from '../pages/Visitspage';
 import { Cities } from '../pages/Citiespage';
+import { City } from '../pages/Citypage';
 
 export class AppRouter extends React.Component {
   render() {
@@ -15,8 +16,9 @@ export class AppRouter extends React.Component {
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="visits" element={<Visits />} />
-          <Route path="*" element={<NotFound />} />
           <Route path="cities" element={<Cities />} />
+          <Route path="city" element={<City />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     );

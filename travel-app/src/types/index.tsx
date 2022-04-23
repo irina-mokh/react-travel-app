@@ -81,6 +81,7 @@ export interface iState {
   perPage: string;
   pages: string[];
   isLoaded: boolean;
+  selected: iCity | null;
 }
 
 export interface iCity {
@@ -112,4 +113,4 @@ export interface iResponse {
   };
 }
 
-export type iPayload = iResponse | string;
+export type iPayload = iResponse | string | iCity;

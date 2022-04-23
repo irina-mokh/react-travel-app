@@ -10,6 +10,7 @@ export const initialState: iState = {
   perPage: '10',
   pages: ['1'],
   isLoaded: false,
+  selected: null,
 };
 
 export const Store = React.createContext<{
@@ -22,7 +23,6 @@ export const Store = React.createContext<{
 
 export const StoreProvider: React.FC = ({ children }) => {
   const [state, dispatch] = React.useReducer(citiesReducer, initialState);
-  console.log(state);
 
   return <Store.Provider value={{ state, dispatch }}>{children}</Store.Provider>;
 };
