@@ -1,22 +1,47 @@
 @use '../styles/vars';
 
 .city-page {
-  text-align: left;
+  margin: 1em;
   max-width: 1220px;
   min-width: 60%;
-  margin: 1em;
-  padding: 1em;
-  background-color: vars.$light-gray;
+  @media (max-width: vars.$mediumScreen) {
+    width: 100%;
+  }
+
+  &__main {
+    text-align: left;
+    padding: 1em;
+    background-color: vars.$light-gray;
+  }
+
+  &__nav {
+    background-color: vars.$light-gray;
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 0 1em 0;
+    padding: 5px;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: vars.$jet;
+  }
+
   &__content {
     display: flex;
     justify-content: space-between;
+    @media (max-width: vars.$smallScreen) {
+      flex-direction: column;
+    }
   }
+
   tr {
     td:first-child {
       font-style: italic;
       min-width: 150px;
     }
   }
+
   &__title {
     font-size: 2em;
     margin: 10px 0;
@@ -25,8 +50,17 @@
     border: 2px solid vars.$green;
     border-width: 0 0 2px 0;
   }
+
   &__country {
     font-weight: 600;
     font-size: 1.5em;
+  }
+
+  &__map {
+    width: 50%;
+    height: 350px;
+    @media (max-width: vars.$smallScreen) {
+      width: 100%;
+    }
   }
 }
