@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
+import React, { useEffect } from 'react';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { TextInput } from '../Textinput';
 import { TextArea } from '../TextArea';
 import { DateInput } from '../DateInput';
@@ -7,8 +7,9 @@ import { Select } from '../Select';
 import { Checkbox } from '../Checkbox';
 import { Switcher } from '../Switcher';
 import { Upload } from '../Upload';
-import { iErrors, iVisit } from '../../types';
+import { iVisit } from '../../types';
 import { VisitsStore } from '../../store/visits';
+import { useForm } from 'react-hook-form';
 
 const countries = [
   '',
@@ -263,23 +264,16 @@ const countries = [
   'Åland Islands',
 ];
 
-export interface FormState {
-  formData: iVisit;
-  isSubmitDisabled: boolean;
-  isInstantValidation: boolean;
-  errors: iErrors;
-}
-
 const fileReader = new FileReader();
 let fileSrc = '';
 
 export const Form = () => {
-  const { dispatch } = React.useContext(VisitsStore);
+  const {
+    state: { isSubmitDisabled, uploadBtnText /* methods*/ },
+    dispatch,
+  } = React.useContext(VisitsStore);
 
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  const [uploadBtnText, setUploadBtnText] = useState<string>('');
   const methods = useForm<iVisit>();
-
   const {
     handleSubmit,
     reset,
@@ -288,8 +282,6 @@ export const Form = () => {
 
   useEffect(() => {
     reset();
-    setUploadBtnText('');
-    setIsSubmitDisabled(true);
   }, [isSubmitSuccessful, reset]);
 
   const onSubmit: SubmitHandler<iVisit> = (data) => {
@@ -303,7 +295,7 @@ export const Form = () => {
   const handleFileChosen = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.currentTarget.value;
     const files = e.currentTarget.files;
-    setUploadBtnText(name.replace(/^.*[\\\/]/, ''));
+    dispatch({ type: 'set upload btn text', payload: name.replace(/^.*[\\\/]/, '') });
     if (files) {
       fileReader.onloadend = () => {
         fileSrc = String(fileReader.result);
@@ -312,16 +304,12 @@ export const Form = () => {
     }
   };
 
-  const handleFormChange = () => {
-    setIsSubmitDisabled(false);
-  };
-
   return (
     <FormProvider {...methods}>
       <form
         className="form"
         onSubmit={handleSubmit(onSubmit)}
-        onChange={handleFormChange}
+        onChange={() => dispatch({ type: 'make submit active' })}
         data-testid="visit-form"
       >
         <TextInput

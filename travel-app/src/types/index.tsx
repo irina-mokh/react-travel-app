@@ -1,3 +1,4 @@
+// import { UseFormReturn } from 'react-hook-form';
 // Forms
 export interface iInput {
   name: string;
@@ -36,11 +37,14 @@ export interface iErrors {
 
 export interface iVisitsState {
   visits: iVisit[];
+  isSubmitDisabled: boolean;
+  uploadBtnText: string;
+  // methods: UseFormReturn<iVisit>;
 }
 
 export type iVisitsAction = {
   type: string;
-  payload: iVisit;
+  payload?: iVisit | string;
 };
 
 // Countries
