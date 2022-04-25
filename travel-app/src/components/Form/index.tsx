@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { TextInput } from '../Textinput';
 import { TextArea } from '../TextArea';
@@ -8,6 +8,7 @@ import { Checkbox } from '../Checkbox';
 import { Switcher } from '../Switcher';
 import { Upload } from '../Upload';
 import { iErrors, iVisit } from '../../types';
+import { VisitsStore } from '../../store/visits';
 
 const countries = [
   '',
@@ -262,10 +263,6 @@ const countries = [
   'Åland Islands',
 ];
 
-interface FormProps {
-  updateData: (e: iVisit) => void;
-}
-
 export interface FormState {
   formData: iVisit;
   isSubmitDisabled: boolean;
@@ -276,7 +273,9 @@ export interface FormState {
 const fileReader = new FileReader();
 let fileSrc = '';
 
-export const Form = (props: FormProps) => {
+export const Form = () => {
+  const { dispatch } = React.useContext(VisitsStore);
+
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [uploadBtnText, setUploadBtnText] = useState<string>('');
   const methods = useForm<iVisit>();
@@ -298,7 +297,7 @@ export const Form = (props: FormProps) => {
     formatData.upload = fileSrc;
     formatData.date = new Date(data.date).toLocaleDateString();
     formatData.purpose = data.purpose ? 'Travel' : 'Business';
-    props.updateData(formatData);
+    dispatch({ type: 'add data', payload: formatData });
   };
 
   const handleFileChosen = (e: React.ChangeEvent<HTMLInputElement>) => {

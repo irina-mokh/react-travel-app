@@ -1,3 +1,4 @@
+// Forms
 export interface iInput {
   name: string;
   label: string;
@@ -21,17 +22,6 @@ export interface iVisit {
   upload: string;
 }
 
-export interface iFormRefs {
-  name: React.RefObject<HTMLInputElement>;
-  title: React.RefObject<HTMLInputElement>;
-  description: React.RefObject<HTMLTextAreaElement>;
-  date: React.RefObject<HTMLInputElement>;
-  country: React.RefObject<HTMLSelectElement>;
-  alone: React.RefObject<HTMLInputElement>;
-  purpose: React.RefObject<HTMLInputElement>;
-  upload: React.RefObject<HTMLInputElement>;
-}
-
 export interface iErrors {
   name: string;
   title: string;
@@ -44,6 +34,16 @@ export interface iErrors {
   counter: number;
 }
 
+export interface iVisitsState {
+  visits: iVisit[];
+}
+
+export type iVisitsAction = {
+  type: string;
+  payload: iVisit;
+};
+
+// Countries
 export interface iCountryInfo {
   name: {
     common: string;
@@ -67,13 +67,15 @@ export interface iCountryInfo {
   };
 }
 
+//Cities
+
 export interface iCitySearch {
   query: string;
   sort: string;
   page: number;
 }
 
-export interface iState {
+export interface iCitiesState {
   data: iCity[] | [];
   query: string;
   sort: string;
@@ -99,12 +101,12 @@ export interface iCity {
   wikiDataId: string;
 }
 
-export type iAction = {
+export type iCitiesAction = {
   type: string;
-  payload?: iPayload;
+  payload?: iCitiesResponse | string | iCity;
 };
 
-export interface iResponse {
+export interface iCitiesResponse {
   data: iCity[];
   links: [];
   metadata: {
@@ -112,5 +114,3 @@ export interface iResponse {
     totalCount: number;
   };
 }
-
-export type iPayload = iResponse | string | iCity;

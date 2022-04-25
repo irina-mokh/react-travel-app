@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { SearchBar } from '../Searchbar';
-import { Store } from '../../store';
+import { CitiesStore } from '../../store/cities';
 
 const PER_PAGE = ['5', '6', '7', '8', '9', '10'];
 const SORT_TYPES = ['name', 'population', 'countryCode'];
@@ -9,7 +9,7 @@ export const CitiesSearch = () => {
   const {
     state: { query, sort, page, pages, perPage },
     dispatch,
-  } = React.useContext(Store);
+  } = React.useContext(CitiesStore);
 
   useEffect(() => {
     const url = `http://geodb-free-service.wirefreethought.com/v1/geo/cities?limit=${perPage}&offset=${page}&namePrefix=${query}&sort=${sort}`;

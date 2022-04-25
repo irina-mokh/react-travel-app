@@ -1,5 +1,5 @@
-import { iState, iCity, iPayload, iResponse } from '../types';
-export const citiesReducer = (state: iState, action: { type: string; payload?: iPayload }) => {
+import { iCitiesState, iCity, iCitiesResponse, iCitiesAction } from '../../types';
+export const citiesReducer = (state: iCitiesState, action: iCitiesAction): iCitiesState => {
   switch (action.type) {
     case 'get response':
       // create array of pages for select
@@ -7,7 +7,7 @@ export const citiesReducer = (state: iState, action: { type: string; payload?: i
       let responseData: iCity[] = [];
 
       if (action.payload) {
-        const response = action.payload as iResponse;
+        const response = action.payload as iCitiesResponse;
         responseData = response.data;
         const pagesCount = Math.ceil(response.metadata.totalCount / Number(state.perPage));
         for (let i = 1; i < pagesCount; i += 1) {

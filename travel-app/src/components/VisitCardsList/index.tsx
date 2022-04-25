@@ -1,15 +1,16 @@
+import React from 'react';
 import { ReactComponent as OneIco } from '../../assets/icons/one.svg';
 import { ReactComponent as GroupIco } from '../../assets/icons/group.svg';
 import { ReactComponent as BusinessIco } from '../../assets/icons/business.svg';
 import { ReactComponent as TravelIco } from '../../assets/icons/travel.svg';
-import { iVisit } from '../../types';
+import { VisitsStore } from '../../store/visits';
 
-interface VisitCardsListProps {
-  data: iVisit[];
-}
+export const VisitCardsList: React.FC = () => {
+  const {
+    state: { visits },
+  } = React.useContext(VisitsStore);
 
-export const VisitCardsList: React.FC<VisitCardsListProps> = (props) => {
-  const cards = props.data.map((item, index) => (
+  const cards = visits.map((item, index) => (
     <li className="visit" key={index}>
       <img className="visit__image" src={item.upload} alt={`A photo from ${item.name}`} />
       <div className="visit__header">
@@ -28,5 +29,5 @@ export const VisitCardsList: React.FC<VisitCardsListProps> = (props) => {
     </li>
   ));
 
-  return <ul className="visitList">{cards}</ul>;
+  return <ul className="visit-list">{cards}</ul>;
 };

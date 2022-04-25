@@ -3,11 +3,11 @@ import { Form } from '../Form';
 
 describe('Form', () => {
   it('renders', () => {
-    render(<Form updateData={() => {}} />);
+    render(<Form />);
     expect(screen.getByTestId('visit-form')).toBeInTheDocument();
   });
   it('submit-button disabled on render', () => {
-    render(<Form updateData={() => {}} />);
+    render(<Form />);
     expect(screen.getByRole('button')).toBeDisabled();
   });
 });

@@ -1,8 +1,8 @@
 import React from 'react';
 import { citiesReducer } from './citiesReducer';
-import { iState, iAction } from '../types';
+import { iCitiesState, iCitiesAction } from '../../types';
 
-export const initialState: iState = {
+export const initialState: iCitiesState = {
   data: [],
   query: localStorage.getItem('city-search') || 'ta',
   sort: 'name',
@@ -13,16 +13,16 @@ export const initialState: iState = {
   selected: null,
 };
 
-export const Store = React.createContext<{
-  state: iState;
-  dispatch: React.Dispatch<iAction>;
+export const CitiesStore = React.createContext<{
+  state: iCitiesState;
+  dispatch: React.Dispatch<iCitiesAction>;
 }>({
   state: initialState,
   dispatch: () => null,
 });
 
-export const StoreProvider: React.FC = ({ children }) => {
+export const CitiesStoreProvider: React.FC = ({ children }) => {
   const [state, dispatch] = React.useReducer(citiesReducer, initialState);
 
-  return <Store.Provider value={{ state, dispatch }}>{children}</Store.Provider>;
+  return <CitiesStore.Provider value={{ state, dispatch }}>{children}</CitiesStore.Provider>;
 };

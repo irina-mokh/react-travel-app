@@ -1,13 +1,13 @@
 import React from 'react';
 import { Loading } from '../Loading/Loading';
-import { Store } from '../../store';
+import { CitiesStore } from '../../store/cities';
 import { Link } from 'react-router-dom';
 
 export const CityCardsList = () => {
   const {
     state: { data, isLoaded },
     dispatch,
-  } = React.useContext(Store);
+  } = React.useContext(CitiesStore);
 
   let content = <div>No results</div>;
 

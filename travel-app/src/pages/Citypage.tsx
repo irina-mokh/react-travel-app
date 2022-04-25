@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import { Navigate } from 'react-router-dom';
-import { Store } from '../store';
+import { CitiesStore } from '../store/cities';
 
 export const City = () => {
   const {
     state: { selected },
-  } = React.useContext(Store);
+  } = React.useContext(CitiesStore);
   const [time, setTime] = useState();
 
   const getTime = (id: number) => {
