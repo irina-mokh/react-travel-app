@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactMapboxGl from 'react-mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Navigate } from 'react-router-dom';
-import { CitiesStore } from '../store/cities';
+import { CitiesStore } from '../../store/cities';
 import { Link } from 'react-router-dom';
 
 const Map = ReactMapboxGl({
