@@ -39,12 +39,17 @@ export interface iVisitsState {
   visits: iVisit[];
   isSubmitDisabled: boolean;
   uploadBtnText: string;
-  // methods: UseFormReturn<iVisit>;
+  fileSrc: string;
 }
 
 export type iVisitsAction = {
   type: string;
-  payload?: iVisit | string;
+  payload?: iVisit | string | iUpload;
+};
+
+export type iUpload = {
+  name: string;
+  src: string;
 };
 
 // Countries

@@ -1,20 +1,24 @@
 import React from 'react';
 import { iInput } from '../../types';
 import { useFormContext } from 'react-hook-form';
+import { VisitsStore } from '../../store/visits';
 
 interface UploadProps extends iInput {
   handleFileChosen: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  btnText: string | null;
 }
 
 export const Upload: React.FC<UploadProps> = (props) => {
+  const {
+    state: { uploadBtnText },
+  } = React.useContext(VisitsStore);
+
   const { register, trigger } = useFormContext();
 
   return (
     <div className={`form__element ${props.name}`}>
       <span className="form__error">{props.error}</span>
       <label className="form__btn" htmlFor={props.name}>
-        {props.btnText || 'Upload File'}
+        {uploadBtnText || 'Upload File'}
       </label>
       <input
         {...register(props.name, { required: 'required field' })}

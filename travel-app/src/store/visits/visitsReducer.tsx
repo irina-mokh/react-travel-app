@@ -1,4 +1,4 @@
-import { iVisitsState, iVisitsAction, iVisit } from '../../types';
+import { iVisitsState, iVisitsAction, iVisit, iUpload } from '../../types';
 
 export const visitsReducer = (state: iVisitsState, action: iVisitsAction): iVisitsState => {
   switch (action.type) {
@@ -6,11 +6,14 @@ export const visitsReducer = (state: iVisitsState, action: iVisitsAction): iVisi
       return {
         ...state,
         visits: [...state.visits, action.payload as iVisit],
+        isSubmitDisabled: true,
+        uploadBtnText: '',
       };
-    case 'set upload btn text':
+    case 'handle upload':
       return {
         ...state,
-        uploadBtnText: action.payload as string,
+        uploadBtnText: (action.payload as iUpload).name,
+        fileSrc: (action.payload as iUpload).src,
       };
     case 'make submit active':
       return {

@@ -2,15 +2,12 @@ import React from 'react';
 import { visitsReducer } from './visitsReducer';
 import { iVisitsState, iVisitsAction } from '../../types';
 import { testVisit } from '../../components/VisitCardsList/testVisit';
-// import { useForm } from 'react-hook-form';
-
-// const methods = useForm<iVisit>();
 
 export const initialState: iVisitsState = {
   visits: [testVisit],
   isSubmitDisabled: true,
   uploadBtnText: '',
-  // methods: methods,
+  fileSrc: '',
 };
 
 export const VisitsStore = React.createContext<{

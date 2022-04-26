@@ -15,7 +15,7 @@ export const VisitCardsList: React.FC = () => {
       <img className="visit__image" src={item.upload} alt={`A photo from ${item.name}`} />
       <div className="visit__header">
         <p className="visit__country">{item.country}</p>
-        <p className="visit__date">{item.date}</p>
+        <p className="visit__date">{new Date(item.date).toLocaleDateString()}</p>
       </div>
       <h3 className="visit__title">{item.title}</h3>
       <p className="visit__name">{item.name}</p>

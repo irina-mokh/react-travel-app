@@ -264,19 +264,37 @@ const countries = [
   'Åland Islands',
 ];
 
+const FORM_INITIAL = {
+  name: '',
+  title: '',
+  date: '',
+  description: '',
+  country: '',
+  purpose: '',
+  alone: true,
+  upload: '',
+};
+
 const fileReader = new FileReader();
-let fileSrc = '';
 
 export const Form = () => {
+  console.log('render form component');
   const {
-    state: { isSubmitDisabled, uploadBtnText /* methods*/ },
+    state: { isSubmitDisabled, fileSrc },
     dispatch,
   } = React.useContext(VisitsStore);
 
-  const methods = useForm<iVisit>();
+  let formData = FORM_INITIAL;
+  if (typeof localStorage.getItem('form') === 'string') {
+    formData = JSON.parse(localStorage.form);
+  }
+  const methods = useForm<iVisit>({
+    defaultValues: formData,
+  });
   const {
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isSubmitSuccessful },
   } = methods;
 
@@ -284,21 +302,40 @@ export const Form = () => {
     reset();
   }, [isSubmitSuccessful, reset]);
 
+  const handleChange = () => {
+    const formData = formatFormData(watch());
+    localStorage.setItem('form', JSON.stringify(formData));
+    dispatch({ type: 'make submit active' });
+  };
+
+  const formatFormData = (data: iVisit) => {
+    const result = data;
+    result.upload = fileSrc;
+    result.date = data.date == 'Invalid Date' ? '' : data.date;
+    result.purpose = data.purpose ? 'Travel' : 'Business';
+    return result;
+  };
+
   const onSubmit: SubmitHandler<iVisit> = (data) => {
-    const formatData = data;
-    formatData.upload = fileSrc;
-    formatData.date = new Date(data.date).toLocaleDateString();
-    formatData.purpose = data.purpose ? 'Travel' : 'Business';
-    dispatch({ type: 'add data', payload: formatData });
+    const formatedData = formatFormData(data);
+    dispatch({ type: 'add data', payload: formatedData });
+    localStorage.removeItem('form');
   };
 
   const handleFileChosen = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.currentTarget.value;
     const files = e.currentTarget.files;
-    dispatch({ type: 'set upload btn text', payload: name.replace(/^.*[\\\/]/, '') });
     if (files) {
       fileReader.onloadend = () => {
-        fileSrc = String(fileReader.result);
+        if (fileReader.result) {
+          dispatch({
+            type: 'handle upload',
+            payload: {
+              name: name.replace(/^.*[\\\/]/, ''),
+              src: fileReader.result as string,
+            },
+          });
+        }
       };
       fileReader.readAsDataURL(files[0]);
     }
@@ -309,7 +346,7 @@ export const Form = () => {
       <form
         className="form"
         onSubmit={handleSubmit(onSubmit)}
-        onChange={() => dispatch({ type: 'make submit active' })}
+        onChange={handleChange}
         data-testid="visit-form"
       >
         <TextInput
@@ -334,7 +371,6 @@ export const Form = () => {
           label="Upload a photo:"
           handleFileChosen={handleFileChosen}
           error={errors.upload?.message}
-          btnText={uploadBtnText}
         />
         <TextArea
           name="description"
