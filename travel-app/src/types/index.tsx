@@ -23,6 +23,17 @@ export interface iVisit {
   upload: string;
 }
 
+export interface iFormData {
+  name: string;
+  title: string;
+  date: string;
+  description: string;
+  country: string;
+  purpose: string;
+  alone: boolean;
+  upload: FileList | null;
+}
+
 export interface iErrors {
   name: string;
   title: string;
@@ -39,18 +50,17 @@ export interface iVisitsState {
   visits: iVisit[];
   isSubmitDisabled: boolean;
   uploadBtnText: string;
-  fileSrc: string;
 }
 
 export type iVisitsAction = {
   type: string;
-  payload?: iVisit | string | iUpload;
+  payload?: iVisit | string;
 };
 
-export type iUpload = {
-  name: string;
-  src: string;
-};
+// export type iUpload = {
+//   name: string;
+//   src: string;
+// };
 
 // Countries
 export interface iCountryInfo {

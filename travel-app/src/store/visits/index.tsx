@@ -7,7 +7,6 @@ export const initialState: iVisitsState = {
   visits: [testVisit],
   isSubmitDisabled: true,
   uploadBtnText: '',
-  fileSrc: '',
 };
 
 export const VisitsStore = React.createContext<{

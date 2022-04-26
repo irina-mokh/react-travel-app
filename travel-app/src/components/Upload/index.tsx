@@ -3,16 +3,12 @@ import { iInput } from '../../types';
 import { useFormContext } from 'react-hook-form';
 import { VisitsStore } from '../../store/visits';
 
-interface UploadProps extends iInput {
-  handleFileChosen: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-export const Upload: React.FC<UploadProps> = (props) => {
+export const Upload: React.FC<iInput> = (props) => {
   const {
     state: { uploadBtnText },
   } = React.useContext(VisitsStore);
 
-  const { register, trigger } = useFormContext();
+  const { register } = useFormContext();
 
   return (
     <div className={`form__element ${props.name}`}>
@@ -27,10 +23,6 @@ export const Upload: React.FC<UploadProps> = (props) => {
         accept="image/png, image/jpeg"
         className={`${props.name}__input`}
         id={props.name}
-        onChange={(e) => {
-          props.handleFileChosen(e);
-          trigger('upload');
-        }}
       />
     </div>
   );

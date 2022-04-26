@@ -6,7 +6,7 @@ import { NotFound } from '../pages/Notfound';
 import { Layout } from './Layout';
 import { Visits } from '../pages/Visitspage';
 import { Cities } from '../pages/Citiespage';
-import { City } from '../pages/Citypage';
+import { City } from '../pages/CityPage/Citypage';
 
 export class AppRouter extends React.Component {
   render() {

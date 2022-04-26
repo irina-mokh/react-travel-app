@@ -7,9 +7,10 @@ import { Select } from '../Select';
 import { Checkbox } from '../Checkbox';
 import { Switcher } from '../Switcher';
 import { Upload } from '../Upload';
-import { iVisit } from '../../types';
+import { iVisit, iFormData } from '../../types';
 import { VisitsStore } from '../../store/visits';
 import { useForm } from 'react-hook-form';
+import { readFileAsync } from '../../utils';
 
 const countries = [
   '',
@@ -272,15 +273,12 @@ const FORM_INITIAL = {
   country: '',
   purpose: '',
   alone: true,
-  upload: '',
+  upload: null,
 };
 
-const fileReader = new FileReader();
-
 export const Form = () => {
-  console.log('render form component');
   const {
-    state: { isSubmitDisabled, fileSrc },
+    state: { isSubmitDisabled },
     dispatch,
   } = React.useContext(VisitsStore);
 
@@ -288,7 +286,7 @@ export const Form = () => {
   if (typeof localStorage.getItem('form') === 'string') {
     formData = JSON.parse(localStorage.form);
   }
-  const methods = useForm<iVisit>({
+  const methods = useForm<iFormData>({
     defaultValues: formData,
   });
   const {
@@ -302,43 +300,39 @@ export const Form = () => {
     reset();
   }, [isSubmitSuccessful, reset]);
 
-  const handleChange = () => {
-    const formData = formatFormData(watch());
+  const handleChange = async () => {
+    const formData = await getFormData(watch());
     localStorage.setItem('form', JSON.stringify(formData));
     dispatch({ type: 'make submit active' });
   };
 
-  const formatFormData = (data: iVisit) => {
-    const result = data;
-    result.upload = fileSrc;
-    result.date = data.date == 'Invalid Date' ? '' : data.date;
-    result.purpose = data.purpose ? 'Travel' : 'Business';
+  const getFormData = async (data: iFormData) => {
+    const { name, title, description, country, alone } = data;
+
+    let fileSrc = '';
+    if (data.upload && !localStorage.upload) {
+      fileSrc = String(await readFileAsync(data.upload[0]));
+      const text = (watch().upload as FileList)[0].name;
+      dispatch({ type: 'change upload btn', payload: text });
+    } else if (localStorage.form) {
+      fileSrc = localStorage.form.upload;
+    }
+    const result: iVisit = {
+      name,
+      title,
+      description,
+      country,
+      alone,
+      upload: fileSrc,
+      date: data.date == 'Invalid Date' ? '' : data.date,
+      purpose: data.purpose ? 'Travel' : 'Business',
+    };
     return result;
   };
 
-  const onSubmit: SubmitHandler<iVisit> = (data) => {
-    const formatedData = formatFormData(data);
-    dispatch({ type: 'add data', payload: formatedData });
-    localStorage.removeItem('form');
-  };
-
-  const handleFileChosen = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.currentTarget.value;
-    const files = e.currentTarget.files;
-    if (files) {
-      fileReader.onloadend = () => {
-        if (fileReader.result) {
-          dispatch({
-            type: 'handle upload',
-            payload: {
-              name: name.replace(/^.*[\\\/]/, ''),
-              src: fileReader.result as string,
-            },
-          });
-        }
-      };
-      fileReader.readAsDataURL(files[0]);
-    }
+  const onSubmit: SubmitHandler<iFormData> = async (data) => {
+    const formData = await getFormData(data);
+    dispatch({ type: 'add data', payload: formData });
   };
 
   return (
@@ -366,12 +360,7 @@ export const Form = () => {
         />
         <Checkbox name="alone" label="Alone" />
         <Switcher name="purpose" label="Purpose:" />
-        <Upload
-          name="upload"
-          label="Upload a photo:"
-          handleFileChosen={handleFileChosen}
-          error={errors.upload?.message}
-        />
+        <Upload name="upload" label="Upload a photo:" error={errors.upload?.message} />
         <TextArea
           name="description"
           label="Impression:"
