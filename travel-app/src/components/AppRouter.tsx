@@ -17,7 +17,7 @@ export class AppRouter extends React.Component {
           <Route path="about" element={<About />} />
           <Route path="visits" element={<Visits />} />
           <Route path="cities" element={<Cities />} />
-          <Route path="city" element={<City />} />
+          <Route path="/:id" element={<City />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

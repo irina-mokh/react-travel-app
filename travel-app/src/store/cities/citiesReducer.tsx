@@ -52,11 +52,6 @@ export const citiesReducer = (state: iCitiesState, action: iCitiesAction): iCiti
         ...state,
         page: +state.page + 1,
       };
-    case 'select city':
-      return {
-        ...state,
-        selected: action.payload as iCity | null,
-      };
     case 'set error':
       return {
         ...state,

@@ -102,7 +102,6 @@ export interface iCitiesState {
   perPage: string;
   pages: string[];
   isLoaded: boolean;
-  selected: iCity | null;
   error: string | null;
 }
 

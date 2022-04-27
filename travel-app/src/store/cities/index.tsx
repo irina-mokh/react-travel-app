@@ -10,7 +10,6 @@ export const initialState: iCitiesState = {
   perPage: '10',
   pages: ['1'],
   isLoaded: false,
-  selected: null,
   error: null,
 };
 
