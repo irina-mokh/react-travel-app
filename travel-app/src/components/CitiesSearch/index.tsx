@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { SearchBar } from '../Searchbar';
 import { CitiesStore } from '../../store/cities';
+import { axios } from '../../utils/axios';
 
 const PER_PAGE = ['5', '6', '7', '8', '9', '10'];
 const SORT_TYPES = ['name', 'population', 'countryCode'];
@@ -12,9 +13,10 @@ export const CitiesSearch = () => {
   } = React.useContext(CitiesStore);
 
   useEffect(() => {
-    const url = `http://geodb-free-service.wirefreethought.com/v1/geo/cities?limit=${perPage}&offset=${page}&namePrefix=${query}&sort=${sort}`;
-    fetch(url)
-      .then((response) => response.json())
+    const url = `/geo/cities?limit=${perPage}&offset=${page}&namePrefix=${query}&sort=${sort}`;
+    axios
+      .get(url)
+      .then((response) => response.data)
       .then((data) => {
         dispatch({ type: 'get response', payload: data });
       });

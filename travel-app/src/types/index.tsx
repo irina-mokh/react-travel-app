@@ -118,6 +118,8 @@ export interface iCity {
   regionCode: string;
   type: string;
   wikiDataId: string;
+  timezone: string;
+  elevationMeters: number;
 }
 
 export type iCitiesAction = {

@@ -1,36 +1,28 @@
-import React, { useState } from 'react';
-import ReactMapboxGl from 'react-mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { CitiesStore } from '../../store/cities';
 import { Link } from 'react-router-dom';
-
-const Map = ReactMapboxGl({
-  accessToken:
-    'pk.eyJ1Ijoic3VwZXJtb2giLCJhIjoiY2wyZWhxN3o5MDB1MzNibWsza2pma2kwdyJ9.zhR6EvEjA9dn7RINZU2Jww',
-});
+import { Map } from '../../components/Map';
 
 export const City = () => {
   const {
     state: { selected },
   } = React.useContext(CitiesStore);
-  const [time, setTime] = useState();
-
-  const getTime = (id: number) => {
-    const url = `http://geodb-free-service.wirefreethought.com/v1/geo/cities/${id}/time`;
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        setTime(data.data.slice(0, 5));
-      });
-  };
 
   let content = <span>No data</span>;
-
   if (selected) {
-    const { name, country, population, region, id, wikiDataId, latitude, longitude, regionCode } =
-      selected;
-    getTime(id);
+    const {
+      name,
+      country,
+      population,
+      region,
+      wikiDataId,
+      latitude,
+      longitude,
+      regionCode,
+      timezone,
+      elevationMeters,
+    } = selected;
 
     content = (
       <div className="city-page">
@@ -55,35 +47,25 @@ export const City = () => {
                 </tr>
                 <tr>
                   <td>Population: </td>
-                  <td>{population.toLocaleString()}</td>
+                  <td>{`${population.toLocaleString()} people`}</td>
                 </tr>
                 <tr>
-                  <td>Time: </td>
-                  <td>{time}</td>
+                  <td>Time zone: </td>
+                  <td>{timezone}</td>
                 </tr>
-                <tr></tr>
+                <tr>
+                  <td>Elevation: </td>
+                  <td>{`${elevationMeters} m`}</td>
+                </tr>
                 <tr>
                   <td>WikiData: </td>
                   <td>
                     <a href={`http://www.wikidata.org/entity/${wikiDataId}`}>{name}</a>
                   </td>
                 </tr>
-                <tr>
-                  <td>Latitude: </td>
-                  <td>{latitude}</td>
-                </tr>
-                <tr>
-                  <td>Longitude: </td>
-                  <td>{longitude}</td>
-                </tr>
               </tbody>
             </table>
-            <Map
-              className="city-page__map"
-              style="mapbox://styles/mapbox/streets-v9"
-              center={[longitude, latitude]}
-              zoom={[10]}
-            ></Map>
+            <Map latitude={latitude} longitude={longitude} zoom={9} />
           </div>
         </div>
       </div>

@@ -55,12 +55,4 @@
     font-weight: 600;
     font-size: 1.5em;
   }
-
-  &__map {
-    width: 50%;
-    height: 350px;
-    @media (max-width: vars.$smallScreen) {
-      width: 100%;
-    }
-  }
 }

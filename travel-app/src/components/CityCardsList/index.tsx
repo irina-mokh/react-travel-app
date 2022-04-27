@@ -2,6 +2,7 @@ import React from 'react';
 import { Loading } from '../Loading/Loading';
 import { CitiesStore } from '../../store/cities';
 import { Link } from 'react-router-dom';
+import { axios } from '../../utils/axios';
 
 export const CityCardsList = () => {
   const {
@@ -22,7 +23,12 @@ export const CityCardsList = () => {
             to={`/city`}
             className="city"
             onClick={() => {
-              dispatch({ type: 'select city', payload: item });
+              axios
+                .get(`/geo/cities/${id}`)
+                .then((response) => response.data.data)
+                .then((data) => {
+                  dispatch({ type: 'select city', payload: data });
+                });
             }}
           >
             <h3 className="city__name">{name}</h3>
