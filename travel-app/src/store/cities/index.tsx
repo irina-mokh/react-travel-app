@@ -11,6 +11,7 @@ export const initialState: iCitiesState = {
   pages: ['1'],
   isLoaded: false,
   selected: null,
+  error: null,
 };
 
 export const CitiesStore = React.createContext<{

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Loading } from '../Loading/Loading';
 import { CitiesStore } from '../../store/cities';
-import { Link } from 'react-router-dom';
 import { axios } from '../../utils/axios';
+import { useNavigate } from 'react-router-dom';
 
 export const CityCardsList = () => {
+  const navigate = useNavigate();
   const {
     state: { data, isLoaded },
     dispatch,
@@ -19,15 +20,19 @@ export const CityCardsList = () => {
       const { id, name, country, population, countryCode } = item;
       return (
         <li key={id} value={name} className="card">
-          <Link
-            to={`/city`}
+          <div
             className="city"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               axios
                 .get(`/geo/cities/${id}`)
                 .then((response) => response.data.data)
                 .then((data) => {
                   dispatch({ type: 'select city', payload: data });
+                  navigate('/city');
+                })
+                .catch((err) => {
+                  dispatch({ type: 'set error', payload: err });
                 });
             }}
           >
@@ -35,7 +40,7 @@ export const CityCardsList = () => {
             <p className="city__country">{country}</p>
             <p className="city__population">{`${population.toLocaleString()} people`}</p>
             <p className="city__code">{countryCode}</p>
-          </Link>
+          </div>
         </li>
       );
     });

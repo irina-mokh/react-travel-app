@@ -103,6 +103,7 @@ export interface iCitiesState {
   pages: string[];
   isLoaded: boolean;
   selected: iCity | null;
+  error: string | null;
 }
 
 export interface iCity {
@@ -124,7 +125,7 @@ export interface iCity {
 
 export type iCitiesAction = {
   type: string;
-  payload?: iCitiesResponse | string | iCity;
+  payload?: iCitiesResponse | string | iCity | null;
 };
 
 export interface iCitiesResponse {

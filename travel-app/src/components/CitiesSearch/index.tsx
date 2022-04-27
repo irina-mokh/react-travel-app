@@ -19,6 +19,9 @@ export const CitiesSearch = () => {
       .then((response) => response.data)
       .then((data) => {
         dispatch({ type: 'get response', payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: 'set error', payload: err });
       });
   }, [page, query, sort, dispatch, perPage]);
 

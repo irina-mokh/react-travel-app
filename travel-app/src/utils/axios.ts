@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'https://wft-geo-db.p.rapidapi.com/v1',
-  timeout: 5000,
+  timeout: 1000,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

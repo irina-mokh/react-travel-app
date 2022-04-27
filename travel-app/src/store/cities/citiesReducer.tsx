@@ -55,7 +55,12 @@ export const citiesReducer = (state: iCitiesState, action: iCitiesAction): iCiti
     case 'select city':
       return {
         ...state,
-        selected: action.payload as iCity,
+        selected: action.payload as iCity | null,
+      };
+    case 'set error':
+      return {
+        ...state,
+        error: action.payload as string,
       };
     default:
       return state;

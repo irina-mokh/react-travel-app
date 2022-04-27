@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -15,15 +15,22 @@ export const Map = (props: iMapProps) => {
   const map = useRef<mapboxgl.Map>();
   const { longitude, latitude, zoom } = props;
 
-  useEffect(() => {
-    if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current as HTMLDivElement,
-      center: [longitude, latitude],
-      zoom: zoom,
-      style: 'mapbox://styles/mapbox/streets-v11',
-    });
-  });
+  useEffect(
+    () => {
+      if (map.current) return; // initialize map only once
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current as HTMLDivElement,
+        center: [longitude, latitude],
+        zoom: zoom,
+        style: 'mapbox://styles/mapbox/light-v10',
+      });
+      return () => {
+        map.current?.remove();
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   return (
     <div className="map-wrapper">

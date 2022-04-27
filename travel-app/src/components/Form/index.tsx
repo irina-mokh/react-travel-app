@@ -301,8 +301,12 @@ export const Form = () => {
   }, [isSubmitSuccessful, reset]);
 
   const handleChange = async () => {
-    const formData = await getFormData(watch());
-    localStorage.setItem('form', JSON.stringify(formData));
+    if (watch().upload) {
+      const text = (watch().upload as FileList)[0].name;
+      dispatch({ type: 'change upload btn', payload: text });
+    }
+    // const formData = await getFormData(watch());
+    localStorage.setItem('form', JSON.stringify(watch()));
     dispatch({ type: 'make submit active' });
   };
 
@@ -312,8 +316,6 @@ export const Form = () => {
     let fileSrc = '';
     if (data.upload && !localStorage.upload) {
       fileSrc = String(await readFileAsync(data.upload[0]));
-      const text = (watch().upload as FileList)[0].name;
-      dispatch({ type: 'change upload btn', payload: text });
     } else if (localStorage.form) {
       fileSrc = localStorage.form.upload;
     }
