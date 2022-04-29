@@ -101,7 +101,7 @@ export interface iCitiesState {
   page: number;
   perPage: string;
   pages: string[];
-  isLoaded: boolean;
+  isLoading: boolean;
   error: string | null;
 }
 

@@ -1,18 +1,20 @@
-import React from 'react';
 import { Loading } from '../Loading/Loading';
-import { CitiesStore } from '../../store/cities';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 export const CityCardsList = () => {
-  const {
-    state: { data, isLoaded },
-  } = React.useContext(CitiesStore);
+  const { data, isLoading, error } = useSelector((state: RootState) => state.cities);
 
-  let content = <div>No results</div>;
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  if (!isLoaded) {
-    content = <Loading />;
-  } else if (data.length) {
+  if (error) {
+    return <>{error}</>;
+  }
+
+  if (data.length) {
     const cards = data.map((item) => {
       const { id, name, country, population, countryCode } = item;
       return (
@@ -26,7 +28,7 @@ export const CityCardsList = () => {
         </li>
       );
     });
-    content = <ul className="cards cards_cities">{cards}</ul>;
+    return <ul className="cards cards_cities">{cards}</ul>;
   }
-  return content;
+  return <div>No results</div>;
 };

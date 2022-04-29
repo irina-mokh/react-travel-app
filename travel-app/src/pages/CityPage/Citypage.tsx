@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { CitiesStore } from '../../store/cities';
+import { useDispatch } from 'react-redux';
+
 import { Map } from '../../components/Map';
 import { axios } from '../../utils/axios';
 import { iCity } from '../../types';
 import { Loading } from '../../components/Loading/Loading';
+import { setError } from '../../store/citiesSlice';
 
 export const City = () => {
   const navigate = useNavigate();
   const [city, setCity] = useState<iCity>();
   const [loading, setLoading] = useState(true);
-  const { dispatch } = React.useContext(CitiesStore);
+  const dispatch = useDispatch();
   const { id } = useParams();
 
   useEffect(
@@ -28,7 +30,7 @@ export const City = () => {
         .catch((err) => {
           if (!unmounted) {
             console.log(err);
-            dispatch({ type: 'set error', payload: err });
+            dispatch(setError('No data'));
             navigate('/');
           }
         });

@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './styles/index.scss';
 import { App } from './components/App';
-import { CitiesStoreProvider } from './store/cities';
-import { VisitsStoreProvider } from './store/visits';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+// import { CitiesStoreProvider } from './store/cities';
+// import { VisitsStoreProvider } from './store/visits';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CitiesStoreProvider>
-      <VisitsStoreProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </VisitsStoreProvider>
-    </CitiesStoreProvider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
