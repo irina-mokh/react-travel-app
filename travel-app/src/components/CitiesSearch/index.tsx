@@ -78,7 +78,13 @@ export const CitiesSearch = () => {
           </select>
         </div>
         <fieldset className="cities__pagination">
-          <button className="arrow" onClick={() => dispatch(prevPage())}>
+          <button
+            className="arrow"
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(prevPage());
+            }}
+          >
             &#10094;
           </button>
           <select
@@ -88,7 +94,13 @@ export const CitiesSearch = () => {
           >
             {renderOptions(pages)}
           </select>
-          <button className="arrow" onClick={() => dispatch(nextPage())}>
+          <button
+            className="arrow"
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(nextPage());
+            }}
+          >
             &#10095;
           </button>
         </fieldset>
