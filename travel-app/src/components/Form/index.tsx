@@ -8,9 +8,11 @@ import { Checkbox } from '../Checkbox';
 import { Switcher } from '../Switcher';
 import { Upload } from '../Upload';
 import { iVisit, iFormData } from '../../types';
-import { VisitsStore } from '../../store/visits';
 import { useForm } from 'react-hook-form';
 import { readFileAsync } from '../../utils';
+import { RootState } from '../../store/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { makeSubmitActive, changeUploadButton, addData } from '../../store/visitsSlice';
 
 const countries = [
   '',
@@ -277,10 +279,8 @@ const FORM_INITIAL = {
 };
 
 export const Form = () => {
-  const {
-    state: { isSubmitDisabled },
-    dispatch,
-  } = React.useContext(VisitsStore);
+  const { isSubmitDisabled } = useSelector((state: RootState) => state.visits);
+  const dispatch = useDispatch();
 
   let formData = FORM_INITIAL;
   if (typeof localStorage.getItem('form') === 'string') {
@@ -303,11 +303,10 @@ export const Form = () => {
   const handleChange = async () => {
     if (watch().upload) {
       const text = (watch().upload as FileList)[0].name;
-      dispatch({ type: 'change upload btn', payload: text });
+      dispatch(changeUploadButton(text));
     }
-    // const formData = await getFormData(watch());
     localStorage.setItem('form', JSON.stringify(watch()));
-    dispatch({ type: 'make submit active' });
+    dispatch(makeSubmitActive());
   };
 
   const getFormData = async (data: iFormData) => {
@@ -334,7 +333,7 @@ export const Form = () => {
 
   const onSubmit: SubmitHandler<iFormData> = async (data) => {
     const formData = await getFormData(data);
-    dispatch({ type: 'add data', payload: formData });
+    dispatch(addData(formData));
   };
 
   return (

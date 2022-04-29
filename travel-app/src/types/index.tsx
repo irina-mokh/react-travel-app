@@ -52,16 +52,6 @@ export interface iVisitsState {
   uploadBtnText: string;
 }
 
-export type iVisitsAction = {
-  type: string;
-  payload?: iVisit | string;
-};
-
-// export type iUpload = {
-//   name: string;
-//   src: string;
-// };
-
 // Countries
 export interface iCountryInfo {
   name: {
@@ -121,11 +111,6 @@ export interface iCity {
   timezone: string;
   elevationMeters: number;
 }
-
-export type iCitiesAction = {
-  type: string;
-  payload?: iCitiesResponse | string | iCity | null;
-};
 
 export interface iCitiesResponse {
   data: iCity[];

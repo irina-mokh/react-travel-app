@@ -1,12 +1,11 @@
 import React from 'react';
 import { iInput } from '../../types';
 import { useFormContext } from 'react-hook-form';
-import { VisitsStore } from '../../store/visits';
+import { RootState } from '../../store/store';
+import { useSelector } from 'react-redux';
 
 export const Upload: React.FC<iInput> = (props) => {
-  const {
-    state: { uploadBtnText },
-  } = React.useContext(VisitsStore);
+  const { uploadBtnText } = useSelector((state: RootState) => state.visits);
 
   const { register } = useFormContext();
 

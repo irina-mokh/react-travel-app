@@ -3,12 +3,11 @@ import { ReactComponent as OneIco } from '../../assets/icons/one.svg';
 import { ReactComponent as GroupIco } from '../../assets/icons/group.svg';
 import { ReactComponent as BusinessIco } from '../../assets/icons/business.svg';
 import { ReactComponent as TravelIco } from '../../assets/icons/travel.svg';
-import { VisitsStore } from '../../store/visits';
+import { RootState } from '../../store/store';
+import { useSelector } from 'react-redux';
 
 export const VisitCardsList: React.FC = () => {
-  const {
-    state: { visits },
-  } = React.useContext(VisitsStore);
+  const { visits } = useSelector((state: RootState) => state.visits);
 
   const cards = visits.map((item, index) => (
     <li className="visit" key={index}>
