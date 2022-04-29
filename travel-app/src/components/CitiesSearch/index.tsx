@@ -1,39 +1,25 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SearchBar } from '../Searchbar';
-import { axios } from '../../utils/axios';
 import {
+  fetchCities,
   changeQuery,
-  getResponse,
   nextPage,
   prevPage,
-  setError,
   changePage,
   changePerPage,
   changeSortType,
 } from '../../store/citiesSlice';
-import { RootState } from '../../store/store';
+import { AppDispatch, RootState } from '../../store/store';
 
 const PER_PAGE = ['5', '6', '7', '8', '9', '10'];
 const SORT_TYPES = ['name', 'population', 'countryCode'];
 
 export const CitiesSearch = () => {
   const { query, sort, page, pages, perPage } = useSelector((state: RootState) => state.cities);
-  const dispatch = useDispatch();
-
+  const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
-    const url = `/geo/cities?limit=${perPage}&offset=${page}&namePrefix=${query}&sort=${sort}`;
-    axios
-      .get(url)
-      .then((response) => response.data)
-      .then((data) => {
-        console.log(data);
-        dispatch(getResponse(data));
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch(setError('No data found'));
-      });
+    dispatch(fetchCities([perPage, page, query, sort]));
   }, [page, query, sort, dispatch, perPage]);
 
   const renderOptions = (optionsAsArray: string[]) => {

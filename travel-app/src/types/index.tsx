@@ -77,7 +77,6 @@ export interface iCountryInfo {
 }
 
 //Cities
-
 export interface iCitySearch {
   query: string;
   sort: string;
@@ -95,6 +94,16 @@ export interface iCitiesState {
   error: string | null;
 }
 
+export interface iCitiesResponse {
+  data: iCity[];
+  links: [];
+  metadata: {
+    currentOffset: number;
+    totalCount: number;
+  };
+}
+
+// City
 export interface iCity {
   city: string;
   country: string;
@@ -112,11 +121,8 @@ export interface iCity {
   elevationMeters: number;
 }
 
-export interface iCitiesResponse {
-  data: iCity[];
-  links: [];
-  metadata: {
-    currentOffset: number;
-    totalCount: number;
-  };
+export interface iCityState {
+  city: iCity | null;
+  isLoading: boolean;
+  error: string | null;
 }

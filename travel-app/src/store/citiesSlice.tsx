@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 import { iCitiesState, iCity, iCitiesResponse } from '../types';
+import { axios } from '../utils/axios';
 
 const initialState: iCitiesState = {
   data: [],
@@ -12,29 +14,29 @@ const initialState: iCitiesState = {
   error: null,
 };
 
+export const fetchCities = createAsyncThunk(
+  'cities/fetchCities',
+  async function (
+    [perPage, page, query, sort]: [string, number, string, string],
+    { rejectWithValue }
+  ) {
+    const url = `/geo/cities?limit=${perPage}&offset=${page}&namePrefix=${query}&sort=${sort}`;
+    try {
+      const response = await axios.get(url);
+      if (response.statusText !== 'OK') {
+        throw new Error('Error');
+      }
+      return response.data as iCitiesResponse;
+    } catch (err) {
+      return rejectWithValue((err as AxiosError).message);
+    }
+  }
+);
+
 export const citiesSlice = createSlice({
   name: 'cities',
   initialState,
   reducers: {
-    getResponse: (state, action: PayloadAction<iCitiesResponse>) => {
-      // create array of pages for select
-      const pagesArray = [];
-      let responseData: iCity[] = [];
-
-      if (action.payload) {
-        console.log(action.payload);
-        const response = action.payload;
-        responseData = response.data;
-        const pagesCount = Math.ceil(response.metadata.totalCount / Number(state.perPage));
-        for (let i = 1; i < pagesCount; i += 1) {
-          pagesArray.push(String(i));
-        }
-      }
-
-      state.data = responseData;
-      state.pages = pagesArray;
-      state.isLoading = false;
-    },
     changeQuery: (state, action) => {
       state.query = String(action.payload);
       state.page = 1;
@@ -55,21 +57,36 @@ export const citiesSlice = createSlice({
     prevPage: (state) => {
       state.page = state.page - 1;
     },
-    setError: (state, action: PayloadAction<string>) => {
-      state.error = String(action.payload);
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCities.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchCities.fulfilled, (state, action) => {
+        // create array of pages for select
+        const pagesArray = [];
+        let responseData: iCity[] = [];
+        if (action.payload) {
+          const response: iCitiesResponse = action.payload;
+          responseData = response.data;
+          const pagesCount = Math.ceil(response.metadata.totalCount / Number(state.perPage));
+          for (let i = 1; i < pagesCount; i += 1) {
+            pagesArray.push(String(i));
+          }
+        }
+        state.data = responseData;
+        state.pages = pagesArray;
+        state.isLoading = false;
+      })
+      .addCase(fetchCities.rejected, (state, action) => {
+        state.error = String(action.payload);
+      });
   },
 });
 
-export const {
-  getResponse,
-  changeQuery,
-  changePerPage,
-  changeSortType,
-  changePage,
-  nextPage,
-  prevPage,
-  setError,
-} = citiesSlice.actions;
+export const { changeQuery, changePerPage, changeSortType, changePage, nextPage, prevPage } =
+  citiesSlice.actions;
 
 export default citiesSlice.reducer;

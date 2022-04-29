@@ -29,6 +29,7 @@ export const CityCardsList = () => {
       );
     });
     return <ul className="cards cards_cities">{cards}</ul>;
+  } else {
+    return <div>No results</div>;
   }
-  return <div>No results</div>;
 };
