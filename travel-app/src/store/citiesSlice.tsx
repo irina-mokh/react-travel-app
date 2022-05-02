@@ -45,17 +45,35 @@ export const citiesSlice = createSlice({
       state.perPage = String(action.payload);
     },
     changeSortType: (state, action: PayloadAction<string>) => {
-      state.sort = String(action.payload);
+      const sort = String(action.payload);
+      switch (sort) {
+        case 'population':
+          state.sort = '-population';
+          break;
+        case 'country code':
+          state.sort = 'countryCode';
+          break;
+        default:
+          state.sort = sort;
+      }
       state.page = 1;
     },
     changePage: (state, action: PayloadAction<number>) => {
       state.page = Number(action.payload);
     },
     nextPage: (state) => {
-      state.page = state.page + 1;
+      if (state.page !== Number(state.pages.slice(-1))) {
+        state.page = state.page + 1;
+      } else {
+        state.page = 1;
+      }
     },
     prevPage: (state) => {
-      state.page = state.page - 1;
+      if (state.page !== 1) {
+        state.page = state.page - 1;
+      } else {
+        state.page = Number(state.pages.slice(-1));
+      }
     },
   },
   extraReducers: (builder) => {

@@ -13,7 +13,7 @@ import {
 import { AppDispatch, RootState } from '../../store/store';
 
 const PER_PAGE = ['5', '6', '7', '8', '9', '10'];
-const SORT_TYPES = ['name', 'population', 'countryCode'];
+const SORT_TYPES = ['name', 'population', 'country code'];
 
 export const CitiesSearch = () => {
   const { query, sort, page, pages, perPage } = useSelector((state: RootState) => state.cities);

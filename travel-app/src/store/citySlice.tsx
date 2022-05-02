@@ -14,12 +14,8 @@ export const fetchCity = createAsyncThunk(
   async function (id: number, { rejectWithValue }) {
     try {
       const response = await axios.get(`/geo/cities/${id}`);
-      if (response.statusText !== 'OK') {
-        throw new Error('Error');
-      }
       return response.data.data;
     } catch (err) {
-      console.log(err);
       return rejectWithValue((err as AxiosError).message);
     }
   }
