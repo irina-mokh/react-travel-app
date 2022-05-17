@@ -100,6 +100,7 @@ export const citiesSlice = createSlice({
       })
       .addCase(fetchCities.rejected, (state, action) => {
         state.error = String(action.payload);
+        state.isLoading = false;
       });
   },
 });

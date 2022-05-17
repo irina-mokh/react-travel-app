@@ -37,6 +37,7 @@ export const citiesSlice = createSlice({
       })
       .addCase(fetchCity.rejected, (state, action) => {
         state.error = String(action.payload);
+        state.isLoading = false;
       });
   },
 });

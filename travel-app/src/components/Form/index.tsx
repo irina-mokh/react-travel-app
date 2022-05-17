@@ -282,12 +282,10 @@ export const Form = () => {
   const { isSubmitDisabled } = useSelector((state: RootState) => state.visits);
   const dispatch = useDispatch();
 
-  let formData = FORM_INITIAL;
-  if (typeof localStorage.getItem('form') === 'string') {
-    formData = JSON.parse(localStorage.form);
-  }
+  const initialFormData = JSON.parse(String(localStorage.getItem('form'))) || FORM_INITIAL;
+
   const methods = useForm<iFormData>({
-    defaultValues: formData,
+    defaultValues: initialFormData,
   });
   const {
     handleSubmit,
@@ -297,17 +295,30 @@ export const Form = () => {
   } = methods;
 
   useEffect(() => {
-    reset();
+    if (isSubmitSuccessful) {
+      reset(FORM_INITIAL);
+    }
   }, [isSubmitSuccessful, reset]);
 
-  const handleChange = async () => {
-    if (watch().upload) {
-      const text = (watch().upload as FileList)[0].name;
-      dispatch(changeUploadButton(text));
-    }
-    localStorage.setItem('form', JSON.stringify(watch()));
-    dispatch(makeSubmitActive());
-  };
+  useEffect(() => {
+    const subscription = watch((value) => {
+      if (value.upload) {
+        const text = (value.upload as FileList)[0].name;
+        dispatch(changeUploadButton(text));
+      }
+      localStorage.setItem('form', JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, dispatch]);
+
+  // const handleChange = async () => {
+  //   // if (watch().upload) {
+  //   //   const text = (watch().upload as FileList)[0].name;
+  //   //   dispatch(changeUploadButton(text));
+  //   // }
+  //   // localStorage.setItem('form', JSON.stringify(watch()));
+  //   // dispatch(makeSubmitActive());
+  // };
 
   const getFormData = async (data: iFormData) => {
     const { name, title, description, country, alone } = data;
@@ -341,7 +352,7 @@ export const Form = () => {
       <form
         className="form"
         onSubmit={handleSubmit(onSubmit)}
-        onChange={handleChange}
+        onChange={() => dispatch(makeSubmitActive())}
         data-testid="visit-form"
       >
         <TextInput
