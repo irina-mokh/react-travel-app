@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-cd ./travel-app && npx lint-staged
+cd npx lint-staged
